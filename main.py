@@ -199,7 +199,9 @@ with tabs[2]:
         **🦋 Klinik Durumlar:**
         * **Hipertiroidi (Zehirli Guatr):** Çok yüksek T4, çok düşük (baskılanmış) TSH. Metabolizma çok hızlıdır.
         * **Hipotiroidi:** Düşük T4, çok yüksek TSH (Vücut tiroit bezini zorlar). Metabolizma yavaştır.
-        * **Bel
+        * **Belirtiler:** T4 artışı nabız yükselmesi, terleme ve kilo kaybına yol açar.
+        """)
+   
 # ------------------------------------------------
 # PARATHORMON – KALSİTONİN SEKME
 # ------------------------------------------------
@@ -273,6 +275,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

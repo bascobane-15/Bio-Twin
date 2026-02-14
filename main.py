@@ -9,8 +9,15 @@ with st.sidebar:
     st.title("BioTwin Dashboard")
     st.markdown("---")
     st.info("""
-    **Dijital İkiz Hakkında:**
-    Bu materyal, **NursTwin-Home** projesi kapsamında endokrin sistemin dinamiklerini öğretmek için geliştirilmiştir.
+    **Proje Vizyonu:**
+    Bu platform, insan fizyolojisini dijital dünyada modellemek amacıyla başlatılan **BioTwin-Systems** serisinin ilk modülüdür. 
+    
+    Şu an yayında olan **Endokrin Sistem** modülüdür. 
+    
+    **Gelecek Planları:**
+    * 🫀 Dolaşım ve Solunum Sistemi Simülasyonları
+           
+    Çalışmamız, eğitimde dijital ikiz kullanımını yaygınlaştırmak için geliştirilmeye devam etmektedir.
     """)
     
     st.subheader("Simülasyon Durumu")
@@ -300,6 +307,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

@@ -1,126 +1,125 @@
 import streamlit as st
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="BioTwin-Integrated", layout="wide")
+st.set_page_config(page_title="BioTwin-Systems", layout="centered")
 
-st.title("🧬 BioTwin-Integrated")
-st.subheader("30 Günlük Kronik Stres ve Uyku Azalması Simülasyonu")
+st.title("🧠 BioTwin-Systems")
+st.subheader("Sinir ve Endokrin Sistem Dijital İkizi")
+st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
 
-# ---------------------------
-# GİRİŞ PARAMETRELERİ
-# ---------------------------
+st.divider()
 
-st.sidebar.header("Girdi Parametreleri")
+# SEKME YAPISI
+tabs = st.tabs(["🟠 Kortizol", "🔵 İnsülin", "🟣 Tiroksin"])
 
-stress = st.sidebar.slider("Stres Seviyesi (0-10)", 0, 10, 6)
-sleep = st.sidebar.slider("Uyku Süresi (Saat)", 4, 8, 5)
-days = st.sidebar.slider("Simülasyon Süresi (Gün)", 1, 30, 30)
+# ------------------------------------------------
+# KORTİZOL SEKME
+# ------------------------------------------------
+with tabs[0]:
+    st.header("Kortizol Hormonu (Stres Hormonu)")
 
-# ---------------------------
-# BAŞLANGIÇ DEĞERLERİ
-# ---------------------------
+    stress = st.slider("Stres Düzeyi", 0, 100, 50)
+    kortizol = stress  # basit ilişki
 
-C = 50  # Kortizol
-results = []
+    st.metric("Kortizol Düzeyi", kortizol)
 
-for t in range(1, days + 1):
-    
-    # Kortizol (zamana bağlı birikimli)
-    C = C + (stress * 0.8) - (sleep * 0.5)
-    C = np.clip(C, 30, 100)
-    
-    # Kan Şekeri
-    G = 50 + (C * 0.3)
-    
-    # İnsülin Duyarlılığı
-    I = 100 - (G * 0.4) - (t * 0.5)
-    I = np.clip(I, 0, 100)
-    
-    # Bağışıklık
-    B = 100 - (C * 0.3) - ((8 - sleep) * 5) - (t * 0.7)
-    B = np.clip(B, 0, 100)
-    
-    # Homeostaz
-    H = (I + B) / 2
-    
-    results.append([t, C, G, I, B, H])
+    if kortizol > 70:
+        st.error("⚠️ Kortizol Fazlalığı")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Bağışıklık sisteminin baskılanması  
+        - Kan şekerinde artış  
+        - Uyku bozuklukları  
 
-# ---------------------------
-# DATAFRAME
-# ---------------------------
+        **İlişkili Hastalıklar:**
+        - Cushing Sendromu  
+        - Kronik stres kaynaklı bağışıklık zayıflığı
+        """)
+    elif kortizol < 30:
+        st.warning("⚠️ Kortizol Eksikliği")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Düşük stres toleransı  
+        - Halsizlik  
+        - Düşük tansiyon  
 
-df = pd.DataFrame(results, columns=["Gün", "Kortizol", "Kan Şekeri", "İnsülin", "Bağışıklık", "Homeostaz"])
+        **İlişkili Hastalık:**
+        - Addison Hastalığı
+        """)
+    else:
+        st.success("✅ Kortizol dengede. Homeostaz korunuyor.")
 
-# ---------------------------
-# GRAFİKLER
-# ---------------------------
+# ------------------------------------------------
+# İNSÜLİN SEKME
+# ------------------------------------------------
+with tabs[1]:
+    st.header("İnsülin Hormonu (Kan Şekeri Düzenleyici)")
 
-st.subheader("📊 Fizyolojik Değişim Grafikleri")
+    nutrition = st.slider("Beslenme / Glikoz Alımı", 0, 100, 60)
+    insulin = nutrition
 
-fig, ax = plt.subplots()
-ax.plot(df["Gün"], df["Kortizol"], label="Kortizol")
-ax.plot(df["Gün"], df["Kan Şekeri"], label="Kan Şekeri")
-ax.plot(df["Gün"], df["İnsülin"], label="İnsülin")
-ax.plot(df["Gün"], df["Bağışıklık"], label="Bağışıklık")
-ax.plot(df["Gün"], df["Homeostaz"], label="Homeostaz")
+    st.metric("İnsülin Düzeyi", insulin)
 
-ax.set_xlabel("Gün")
-ax.set_ylabel("İndeks Değeri")
-ax.legend()
+    if insulin < 30:
+        st.error("❗ İnsülin Eksikliği")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Kan şekerinin yükselmesi (hiperglisemi)  
+        - Hücrelere glikoz girişi azalır  
 
-st.pyplot(fig)
+        **İlişkili Hastalık:**
+        - Diyabet (Tip 1 benzeri tablo)
+        """)
+    elif insulin > 70:
+        st.warning("⚠️ İnsülin Fazlalığı")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Kan şekerinin aşırı düşmesi (hipoglisemi)  
+        - Baş dönmesi, bilinç bulanıklığı  
 
-# ---------------------------
-# SON GÜN DURUMU
-# ---------------------------
+        **İlişkili Durum:**
+        - Reaktif hipoglisemi
+        """)
+    else:
+        st.success("✅ İnsülin dengede. Kan şekeri kontrol altında.")
 
-st.subheader("📌 Son Gün Fizyolojik Durum")
+# ------------------------------------------------
+# TİROKSİN SEKME
+# ------------------------------------------------
+with tabs[2]:
+    st.header("Tiroksin (T4) Hormonu – Metabolizma Düzenleyici")
 
-last = df.iloc[-1]
+    tiroksin = st.slider("Tiroksin (T4) Düzeyi", 0, 100, 50)
+    st.metric("Tiroksin Düzeyi", tiroksin)
 
-st.write(f"**Kortizol:** {round(last['Kortizol'],1)}")
-st.write(f"**Kan Şekeri:** {round(last['Kan Şekeri'],1)}")
-st.write(f"**İnsülin Duyarlılığı:** {round(last['İnsülin'],1)}")
-st.write(f"**Bağışıklık İndeksi:** {round(last['Bağışıklık'],1)}")
-st.write(f"**Homeostaz Skoru:** {round(last['Homeostaz'],1)}")
-# ---------------------------
-# AVATAR GÖRSELİ
-# ---------------------------
+    if tiroksin < 30:
+        st.warning("⚠️ Tiroksin Eksikliği")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Metabolizma hızının yavaşlaması  
+        - Kilo artışı  
+        - Yorgunluk, soğuğa hassasiyet  
 
-st.subheader("🧍 Dijital İkiz Görsel Durum")
+        **İlişkili Hastalık:**
+        - Hipotiroidi
+        """)
+    elif tiroksin > 70:
+        st.error("⚠️ Tiroksin Fazlalığı")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Metabolizma hızının artması  
+        - Kilo kaybı  
+        - Çarpıntı, sinirlilik  
 
-last = df.iloc[-1]
+        **İlişkili Hastalık:**
+        - Hipertiroidi
+        """)
+    else:
+        st.success("✅ Tiroksin dengede. Metabolik denge sağlanıyor.")
 
-C_val = last["Kortizol"]
-G_val = last["Kan Şekeri"]
-B_val = last["Bağışıklık"]
-H_val = last["Homeostaz"]
+st.divider()
+st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
 
-# Renk Mantığı
-brain_color = "yellow" if C_val > 70 else "lightgray"
-abdomen_color = "orange" if G_val > 70 else "lightgray"
-body_color = "red" if H_val < 50 else "#cccccc"
-opacity = 0.5 if B_val < 60 else 1
 
-avatar_html = f"""
-<svg width="300" height="500" viewBox="0 0 200 400">
-    <!-- Body -->
-    <ellipse cx="100" cy="200" rx="60" ry="120" fill="{body_color}" opacity="{opacity}" />
-    
-    <!-- Head -->
-    <circle cx="100" cy="80" r="40" fill="{body_color}" opacity="{opacity}" />
-    
-    <!-- Brain (Stress Area) -->
-    <circle cx="100" cy="70" r="15" fill="{brain_color}" />
-    
-    <!-- Abdomen (Metabolic Area) -->
-    <ellipse cx="100" cy="220" rx="30" ry="40" fill="{abdomen_color}" />
-</svg>
-"""
-
-st.markdown(avatar_html, unsafe_allow_html=True)
 
 
 

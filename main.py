@@ -21,38 +21,52 @@ tabs = st.tabs([
 # KORTİZOL SEKME
 # ------------------------------------------------
 with tabs[0]:
-    st.header("Kortizol Hormonu (Stres Hormonu)")
+    st.header("Kortizol Hormonu (Stres ve Yaşam Ritmi)")
+    
+    # İKİNCİL GİRDİ: GÜNÜN SAATİ (Sirkadiyen Ritim için)
+    saat = st.select_slider(
+        "Günün Hangi Saatindeyiz?",
+        options=["06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03:00"],
+        value="09:00"
+    )
 
-    stress = st.slider("Stres Düzeyi", 0, 100, 50)
-    kortizol = stress  # basit ilişki
+    # ANA GİRDİ: STRES DÜZEYİ
+    stress = st.slider("Psikolojik/Fiziksel Stres Düzeyi", 0, 100, 50)
 
-    st.metric("Kortizol Düzeyi", kortizol)
+    # DİJİTAL İKİZ HESAPLAMA MANTIĞI
+    # Sirkadiyen baz puanları (Sabah yüksek, gece düşük)
+    ritim_puanlari = {
+        "06:00": 70, "09:00": 90, "12:00": 60, "15:00": 40, 
+        "18:00": 30, "21:00": 20, "00:00": 10, "03:00": 30
+    }
+    baz_kortizol = ritim_puanlari[saat]
+    
+    # Toplam Kortizol = Biyolojik Ritim + Stres Etkisi (Normalize edilmiş)
+    toplam_kortizol = min(100, baz_kortizol + (stress * 0.5))
 
-    if kortizol > 70:
-        st.error("⚠️ Kortizol Fazlalığı")
-        st.markdown("""
-        **Olası Sonuçlar:**
-        - Bağışıklık sisteminin baskılanması  
-        - Kan şekerinde artış  
-        - Uyku bozuklukları  
+    # GÖRSELLEŞTİRME: METRİK
+    st.metric("Anlık Kortizol Seviyesi", f"{toplam_kortizol:.1f} µg/dL", delta=f"{stress/2:.1f} (Stres Kaynaklı)")
 
-        **İlişkili Hastalıklar:**
-        - Cushing Sendromu  
-        - Kronik stres kaynaklı bağışıklık zayıflığı
-        """)
-    elif kortizol < 30:
-        st.warning("⚠️ Kortizol Eksikliği")
-        st.markdown("""
-        **Olası Sonuçlar:**
-        - Düşük stres toleransı  
-        - Halsizlik  
-        - Düşük tansiyon  
+    # GÖRSELLEŞTİRME: PLOTLY ÇİZGİ GRAFİĞİ (Sirkadiyen Ritim)
+    import plotly.express as px
+    df_ritim = pd.DataFrame({
+        "Saat": list(ritim_puanlari.keys()),
+        "Normal Seviye": list(ritim_puanlari.values()),
+        "Senin Seviyen": [min(100, v + (stress * 0.5)) for v in ritim_puanlari.values()]
+    })
+    
+    fig_kortizol = px.line(df_ritim, x="Saat", y=["Normal Seviye", "Senin Seviyen"], 
+                          title="24 Saatlik Kortizol Döngüsü ve Stres Etkisi",
+                          color_discrete_map={"Normal Seviye": "gray", "Senin Seviyen": "orange"})
+    st.plotly_chart(fig_kortizol, use_container_width=True)
 
-        **İlişkili Hastalık:**
-        - Addison Hastalığı
-        """)
+    # KLİNİK YORUM
+    if toplam_kortizol > 80:
+        st.error("⚠️ Yüksek Kortizol: Uyku bozukluğu ve bağışıklık zayıflığı riski!")
+    elif toplam_kortizol < 20:
+        st.warning("⚠️ Düşük Kortizol: Yorgunluk ve düşük kan şekeri riski.")
     else:
-        st.success("✅ Kortizol dengede. Homeostaz korunuyor.")
+        st.success("✅ Kortizol seviyesi şu anki saat dilimi için dengeli.")
 # ------------------------------------------------
 # İNSÜLİN SEKME
 # ------------------------------------------------
@@ -234,6 +248,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

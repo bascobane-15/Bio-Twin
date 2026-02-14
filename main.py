@@ -52,35 +52,41 @@ with tabs[0]:
 # İNSÜLİN SEKME
 # ------------------------------------------------
 with tabs[1]:
-    st.header("İnsülin Hormonu (Kan Şekeri Düzenleyici)")
+    st.header("İnsülin – Glukagon Dengesi (Antagonist Hormonlar)")
 
-    nutrition = st.slider("Beslenme / Glikoz Alımı", 0, 100, 60)
-    insulin = nutrition
+    glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
+
+    insulin = max(0, glucose - 30)
+    glucagon = max(0, 70 - glucose)
 
     st.metric("İnsülin Düzeyi", insulin)
+    st.metric("Glukagon Düzeyi", glucagon)
 
-    if insulin < 30:
-        st.error("❗ İnsülin Eksikliği")
-        st.markdown("""
-        **Olası Sonuçlar:**
-        - Kan şekerinin yükselmesi (hiperglisemi)  
-        - Hücrelere glikoz girişi azalır  
-
-        **İlişkili Hastalık:**
-        - Diyabet (Tip 1 benzeri tablo)
-        """)
-    elif insulin > 70:
-        st.warning("⚠️ İnsülin Fazlalığı")
-        st.markdown("""
-        **Olası Sonuçlar:**
-        - Kan şekerinin aşırı düşmesi (hipoglisemi)  
-        - Baş dönmesi, bilinç bulanıklığı  
-
-        **İlişkili Durum:**
-        - Reaktif hipoglisemi
-        """)
+    if insulin > glucagon:
+        st.success("✅ İnsülin baskın → Kan şekeri düşürülüyor")
+    elif glucagon > insulin:
+        st.warning("⚠️ Glukagon baskın → Kan şekeri yükseltiliyor")
     else:
-        st.success("✅ İnsülin dengede. Kan şekeri kontrol altında.")
+        st.info("ℹ️ Denge durumu")
+
+    if insulin < 20:
+        st.error("""
+        ❗ **İnsülin Eksikliği**
+        - Kan şekeri yükselir  
+        - Hücreler glikozu kullanamaz  
+
+        **İlişkili Hastalık:**  
+        - Diyabet
+        """)
+
+    if glucagon > 70:
+        st.warning("""
+        ⚠️ **Glukagon Fazlalığı**
+        - Sürekli kan şekeri yükselmesi  
+
+        **İlişkili Durum:**  
+        - Hiperglisemi
+        """)
 
 # ------------------------------------------------
 # TİROKSİN SEKME
@@ -118,14 +124,3 @@ with tabs[2]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
-
-
-
-
-
-
-
-
-
-
-

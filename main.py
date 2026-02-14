@@ -142,65 +142,44 @@ with tabs[1]:
 # ------------------------------------------------
 # TİROKSİN SEKME
 # ------------------------------------------------
-with tabs[2]:
-    st.header("Tiroksin ve HPT Aksı: Negatif Feedback Mekanizması")
-    
-    # 1. GİRDİ ALANI: Tiroit Bezi Aktivitesi
-    # Öğrenci tiroit bezinin ne kadar çalıştığını seçer
-    tiroit_aktivite = st.slider("Tiroit Bezi Çalışma Hızı (%)", 0, 200, 100)
-    
-    # 2. FEEDBACK MANTIĞI
-    # Tiroksin (T4), tiroit aktivitesine bağlıdır.
-    tiroksin = tiroit_aktivite * 0.5
-    
-    # Negatif Feedback: Tiroksin arttıkça Hipofiz'den salgılanan TSH azalır.
-    tsh = max(0.1, 100 - (tiroksin * 1.5))
-
-    # 3. GÖRSELLEŞTİRME: Çift Eksenli Grafik veya İki Gösterge
-    col_t1, col_t2 = st.columns(2)
-    with col_t1:
-        st.metric("Tiroksin (T4) Seviyesi", f"{tiroksin:.1f}", delta="Yüksek" if tiroksin > 60 else "Normal")
-    with col_t2:
-        st.metric("TSH (Hipofiz Yanıtı)", f"{tsh:.1f}", delta=f"-{100-tsh:.1f}", delta_color="inverse")
-
-    # Bar Grafik ile Feedback Gösterimi
-    import plotly.graph_objects as go
-    fig_tiroit = go.Figure()
-    fig_tiroit.add_trace(go.Bar(
-        x=['TSH (Uyarıcı)', 'Tiroksin (Sonuç)'],
-        y=[tsh, tiroksin],
-        marker_color=['#9b59b6', '#3498db'], # Mor ve Mavi
-        text=[f"TSH: {tsh:.1f}", f"T4: {tiroksin:.1f}"],
-        textposition='auto'
-    ))
-    fig_tiroit.update_layout(title="Hipofiz - Tiroit Geri Bildirim Dengesi", yaxis_range=[0, 150])
-    st.plotly_chart(fig_tiroit, use_container_width=True)
-
-    st.divider()
+st.divider()
 
     # 4. AKADEMİK BİLGİ ALANI (Ders Materyali)
-    st.subheader("📚 Klinik Bilgi Paneli: HPT Aksı ve Metabolizma")
+    st.subheader("📚 Klinik Bilgi Paneli: Metabolik Durumlar")
     
-    st.info("💡 **Negatif Feedback Nedir?** Kanda Tiroksin yükseldiğinde, bu hormon Hipofiz bezini baskılayarak TSH salgısını azaltır. Böylece vücut kendi dengesini korur.")
+    # Klinik Durum Karşılaştırma Tablosu
+    col_symp1, col_symp2 = st.columns(2)
 
-    col_t_info1, col_t_info2 = st.columns(2)
-
-    with col_t_info1:
+    with col_symp1:
+        st.error("🔥 Hipertiroidi (T4 Yüksek / TSH Düşük)")
         st.markdown("""
-        **🔍 Mekanizma Akışı:**
-        1. **Hipotalamus:** TRH salgılar.
-        2. **Hipofiz:** TRH etkisiyle **TSH** salgılar.
-        3. **Tiroit Bezi:** TSH etkisiyle **Tiroksin (T4)** üretir.
-        4. **Geri Bildirim:** T4 düzeyi artınca Hipofiz'e 'TSH'ı kes' sinyali gider.
+        **Vücuttaki Belirtiler:**
+        * **Metabolizma:** Çok hızlıdır, istirahatte bile enerji harcanır.
+        * **Kilo:** İştah artışına rağmen hızlı kilo kaybı görülür.
+        * **Kalp:** Çarpıntı (Taşikardi) ve yüksek tansiyon.
+        * **Sinir Sistemi:** Aşırı sinirlilik, ellerde titreme ve uykusuzluk.
+        * **Isı Toleransı:** Sıcağa tahammülsüzlük ve aşırı terleme.
+        * **Gözler:** Ekzoftalmi (Göz kürelerinin dışa fırlaması - Basedow Graves).
         """)
 
-    with col_info2:
+    with col_symp2:
+        st.warning("❄️ Hipotiroidi (T4 Düşük / TSH Yüksek)")
         st.markdown("""
-        **🦋 Klinik Durumlar:**
-        * **Hipertiroidi (Zehirli Guatr):** Çok yüksek T4, çok düşük (baskılanmış) TSH. Metabolizma çok hızlıdır.
-        * **Hipotiroidi:** Düşük T4, çok yüksek TSH (Vücut tiroit bezini zorlar). Metabolizma yavaştır.
-        * **Belirtiler:** T4 artışı nabız yükselmesi, terleme ve kilo kaybına yol açar.
+        **Vücuttaki Belirtiler:**
+        * **Metabolizma:** Çok yavaştır, vücut enerji tasarrufuna geçer.
+        * **Kilo:** Az yemesine rağmen kilo alma ve ödem (Miksödem).
+        * **Kalp:** Nabız yavaşlaması (Bradikardi).
+        * **Zihinsel Durum:** Unutkanlık, konsantrasyon güçlüğü ve depresif ruh hali.
+        * **Isı Toleransı:** Soğuğa tahammülsüzlük ve sürekli üşüme hissi.
+        * **Deri/Saç:** Ciltte kuruluk, saç dökülmesi ve ses kalınlaşması.
         """)
+
+    # 5. ÖĞRENCİLER İÇİN ÖZET NOT
+    st.info("""
+    💡 **Öğretmen Notu:** TSH ve T4 arasındaki ilişkiyi 'gaz ve fren' gibi düşünebilirsiniz. 
+    Eğer T4 (araba hızı) çok fazlaysa, Hipofiz TSH (gaz) vermeyi keser. 
+    Eğer T4 çok düşükse, Hipofiz TSH'ı kökler ki vücut hızlansın.
+    """)
    
 # ------------------------------------------------
 # PARATHORMON – KALSİTONİN SEKME
@@ -275,6 +254,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

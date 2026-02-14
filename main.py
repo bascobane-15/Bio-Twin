@@ -142,7 +142,41 @@ with tabs[1]:
 # ------------------------------------------------
 # TİROKSİN SEKME
 # ------------------------------------------------
-st.divider()
+with tabs[2]:
+    st.header("Tiroksin ve HPT Aksı: Negatif Feedback Mekanizması")
+    
+    # 1. GİRDİ ALANI: Tiroit Bezi Aktivitesi
+    # Öğrenci tiroit bezinin ne kadar çalıştığını seçer
+    tiroit_aktivite = st.slider("Tiroit Bezi Çalışma Hızı (%)", 0, 200, 100)
+    
+    # 2. FEEDBACK MANTIĞI
+    # Tiroksin (T4), tiroit aktivitesine bağlıdır.
+    tiroksin = tiroit_aktivite * 0.5
+    
+    # Negatif Feedback: Tiroksin arttıkça Hipofiz'den salgılanan TSH azalır.
+    tsh = max(0.1, 100 - (tiroksin * 1.5))
+
+    # 3. GÖRSELLEŞTİRME: Çift Eksenli Grafik veya İki Gösterge
+    col_t1, col_t2 = st.columns(2)
+    with col_t1:
+        st.metric("Tiroksin (T4) Seviyesi", f"{tiroksin:.1f}", delta="Yüksek" if tiroksin > 60 else "Normal")
+    with col_t2:
+        st.metric("TSH (Hipofiz Yanıtı)", f"{tsh:.1f}", delta=f"-{100-tsh:.1f}", delta_color="inverse")
+
+    # Bar Grafik ile Feedback Gösterimi
+    import plotly.graph_objects as go
+    fig_tiroit = go.Figure()
+    fig_tiroit.add_trace(go.Bar(
+        x=['TSH (Uyarıcı)', 'Tiroksin (Sonuç)'],
+        y=[tsh, tiroksin],
+        marker_color=['#9b59b6', '#3498db'], # Mor ve Mavi
+        text=[f"TSH: {tsh:.1f}", f"T4: {tiroksin:.1f}"],
+        textposition='auto'
+    ))
+    fig_tiroit.update_layout(title="Hipofiz - Tiroit Geri Bildirim Dengesi", yaxis_range=[0, 150])
+    st.plotly_chart(fig_tiroit, use_container_width=True)
+
+   st.divider()
 
     # 4. AKADEMİK BİLGİ ALANI (Ders Materyali)
     st.subheader("📚 Klinik Bilgi Paneli: Metabolik Durumlar")
@@ -254,6 +288,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

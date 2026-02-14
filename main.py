@@ -82,75 +82,62 @@ with tabs[0]:
 # İNSÜLİN SEKME
 # ------------------------------------------------
 with tabs[1]:
-    st.header("İnsülin Hormonu (Kan Şekeri Düzenleyici)")
+    st.header("İnsülin ve Glukagon: Kan Şekeri Homeostazı")
+    
+    # 1. GİRDİ ALANI: Kan Glikoz Düzeyi
+    # Tıbbi olarak normal açlık şekeri 70-100 mg/dL arasıdır.
+    glikoz = st.slider("Kan Glikoz Seviyesi (mg/dL)", 40, 200, 90)
+    
+    # 2. HESAPLAMA MANTIĞI (Antagonist Model)
+    # Glikoz arttıkça İnsülin artar, Glukagon azalır.
+    insulin = max(0.0, (glikoz - 70) * 1.5) if glikoz > 70 else 0
+    glukagon = max(0.0, (110 - glikoz) * 1.5) if glikoz < 110 else 0
 
-    st.markdown("""
-    İnsülin ve glukagon hormonları **antagonist** etki göstererek
-    kan şekeri dengesinin (homeostaz) sağlanmasında rol oynar.
-    """)
+    # 3. GÖRSELLEŞTİRME: Karşılaştırmalı Bar Grafik
+    import plotly.graph_objects as go
+    fig_kan_sekeri = go.Figure()
+    fig_kan_sekeri.add_trace(go.Bar(
+        x=['İnsülin (Anabolik)', 'Glukagon (Katabolik)'],
+        y=[insulin, glukagon],
+        marker_color=['#1f77b4', '#d62728'], # Mavi ve Kırmızı
+        text=[f"Seviye: {insulin:.1f}", f"Seviye: {glukagon:.1f}"],
+        textposition='auto'
+    ))
+    fig_kan_sekeri.update_layout(title="Hormonların Glikoz Seviyesine Yanıtı", yaxis_range=[0, 150])
+    st.plotly_chart(fig_kan_sekeri, use_container_width=True)
 
-    # ÇEVRESEL / FİZYOLOJİK GİRDİ
-    glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
+    st.divider()
 
-    # HORMON DÜZEYLERİ (basitleştirilmiş model)
-    insulin = max(0, glucose - 30)
-    glucagon = max(0, 70 - glucose)
+    # 4. AKADEMİK BİLGİ ALANI (Ders Materyali)
+    st.subheader("📚 Klinik Bilgi Paneli: Glikoz Regülasyonu")
+    
+    col_ins1, col_ins2 = st.columns(2)
 
-    # HORMON DÜZEYLERİ GÖSTERİM
-    col1, col2 = st.columns(2)
-    col1.metric("İnsülin Düzeyi", insulin)
-    col2.metric("Glukagon Düzeyi", glucagon)
-
-    # ANTİAGONİST HORMON GRAFİĞİ
-    df = pd.DataFrame({
-        "Hormon": ["İnsülin", "Glukagon"],
-        "Düzey": [insulin, glucagon]
-    })
-
-    st.subheader("Antagonist Hormonlar – Aynı Grafikte")
-    st.bar_chart(df.set_index("Hormon"))
-
-    # FİZYOLOJİK YORUM
-    if insulin > glucagon:
-        st.success("""
-        ✅ **İnsülin Baskın**
-        - Hücrelere glikoz girişi artar  
-        - Kan şekeri düşürülür  
-        - Homeostaz korunur
+    with col_ins1:
+        st.markdown("""
+        **🔵 İnsülin (Beta Hücreleri):**
+        * **Görevi:** Kan şekerini düşürmek.
+        * **Mekanizma:** Glikozun hücre içine girişini sağlar (GLUT4 kapılarını açar).
+        * **Depolama:** Glikozun fazlasını karaciğer ve kasta **Glikojen** olarak depolar.
+        * **Sentez:** Protein ve yağ sentezini uyarır (Anabolik hormon).
         """)
-    elif glucagon > insulin:
-        st.warning("""
-        ⚠️ **Glukagon Baskın**
-        - Karaciğerde glikojen yıkımı artar  
-        - Kana glikoz verilir  
-        - Kan şekeri yükselir
+
+    with col_ins2:
+        st.markdown("""
+        **🔴 Glukagon (Alfa Hücreleri):**
+        * **Görevi:** Kan şekerini yükseltmek.
+        * **Mekanizma:** Karaciğerdeki glikojenin parçalanmasını sağlar (**Glikojenoliz**).
+        * **Üretim:** Karbonhidrat olmayan kaynaklardan (protein/yağ) glikoz üretir (**Glukoneojenez**).
+        * **Yıkım:** Enerji açığı durumunda devreye girer (Katabolik hormon).
         """)
+
+    # 5. KLİNİK DURUM ÖZETİ
+    if glikoz > 140:
+        st.error(f"⚠️ **Hiperglisemi:** Kan şekeri yüksek ({glikoz} mg/dL). İnsülin salgısı maksimumda, glikoz hücrelere taşınmaya çalışılıyor.")
+    elif glikoz < 70:
+        st.warning(f"⚠️ **Hipoglisemi:** Kan şekeri düşük ({glikoz} mg/dL). Glukagon devreye girerek karaciğerden kana şeker salınmasını uyarıyor.")
     else:
-        st.info("ℹ️ İnsülin ve glukagon dengede → Kan şekeri dengesi sağlanıyor")
-
-    # HASTALIK SENARYOLARI
-    st.subheader("Hormon Dengesizliğinde Oluşan Durumlar")
-
-    if insulin < 20:
-        st.error("""
-        ❗ **İnsülin Eksikliği**
-        - Hiperglisemi (kan şekeri yüksekliği)
-        - Hücreler glikozu kullanamaz
-
-        **İlişkili Hastalık:**  
-        - Diyabet (Tip 1 benzeri tablo)
-        """)
-
-    if insulin > 80:
-        st.warning("""
-        ⚠️ **İnsülin Fazlalığı**
-        - Hipoglisemi (kan şekeri düşüklüğü)
-        - Baş dönmesi, bilinç bulanıklığı
-
-        **İlişkili Durum:**  
-        - Reaktif hipoglisemi
-        """)
-
+        st.success("✅ **Normoglisemi:** Kan şekeri ideal aralıkta. Homeostaz korunuyor.")
       
 # ------------------------------------------------
 # TİROKSİN SEKME
@@ -259,6 +246,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

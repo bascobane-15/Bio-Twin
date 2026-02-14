@@ -173,13 +173,15 @@ with tabs[3]:
     kandaki kalsiyum düzeyinin düzenlenmesini sağlar.
     """)
 
-    # FİZYOLOJİK GİRDİ
-    calcium = st.slider("Kandaki Kalsiyum Düzeyi", 0, 100, 50)
+   # FİZYOLOJİK GİRDİ (Kalsiyum değerini 8-12 arasına çektik, daha gerçekçi)
+    calcium = st.slider("Kandaki Kalsiyum Düzeyi (mg/dL)", 8.0, 12.0, 10.0)
 
-    # HORMON DÜZEYLERİ (basitleştirilmiş model)
-    parathormon = max(0, 70 - calcium)
-    kalsitonin = max(0, calcium - 30)
-
+    # HORMON DÜZEYLERİ (Antagonist Model)
+    # Kalsiyum düştükçe PTH tavan yapar, kalsiyum arttıkça PTH sıfıra yaklaşır.
+    parathormon = max(0.0, (12.0 - calcium) * 25) 
+    
+    # Kalsiyum arttıkça Kalsitonin tavan yapar.
+    kalsitonin = max(0.0, (calcium - 8.0) * 25)
     # HORMON DÜZEYLERİ GÖSTERİM
     col1, col2 = st.columns(2)
     col1.metric("Parathormon (PTH)", parathormon)
@@ -217,6 +219,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

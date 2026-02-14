@@ -51,26 +51,43 @@ with tabs[0]:
 # ------------------------------------------------
 # İNSÜLİN SEKME
 # ------------------------------------------------
-    st.subheader("İnsülin – Glukagon Antagonizması")
+with tabs[1]:
+    st.header("İnsülin – Glukagon Dengesi (Antagonist Hormonlar)")
 
     glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
 
     insulin = max(0, glucose - 30)
     glucagon = max(0, 70 - glucose)
 
-    df = pd.DataFrame({
-        "Hormon": ["İnsülin", "Glukagon"],
-        "Düzey": [insulin, glucagon]
-    })
-
-    st.bar_chart(df.set_index("Hormon"))
+    st.metric("İnsülin Düzeyi", insulin)
+    st.metric("Glukagon Düzeyi", glucagon)
 
     if insulin > glucagon:
         st.success("✅ İnsülin baskın → Kan şekeri düşürülüyor")
     elif glucagon > insulin:
         st.warning("⚠️ Glukagon baskın → Kan şekeri yükseltiliyor")
     else:
-        st.info("ℹ️ Hormonlar dengede → Homeostaz sağlanıyor")
+        st.info("ℹ️ Denge durumu")
+
+    if insulin < 20:
+        st.error("""
+        ❗ **İnsülin Eksikliği**
+        - Kan şekeri yükselir  
+        - Hücreler glikozu kullanamaz  
+
+        **İlişkili Hastalık:**  
+        - Diyabet
+        """)
+
+    if glucagon > 70:
+        st.warning("""
+        ⚠️ **Glukagon Fazlalığı**
+        - Sürekli kan şekeri yükselmesi  
+
+        **İlişkili Durum:**  
+        - Hiperglisemi
+        """)
+
 
 # ------------------------------------------------
 # TİROKSİN SEKME
@@ -105,27 +122,9 @@ with tabs[2]:
         """)
     else:
         st.success("✅ Tiroksin dengede. Metabolik denge sağlanıyor.")
-    st.subheader("Parathormon – Kalsitonin Antagonizması (Kalsiyum Dengesi)")
-
-    calcium = st.slider("Kandaki Kalsiyum Düzeyi", 0, 100, 50)
-
-    parathormon = max(0, 70 - calcium)
-    kalsitonin = max(0, calcium - 30)
-
-    df2 = pd.DataFrame({
-        "Hormon": ["Parathormon (PTH)", "Kalsitonin"],
-        "Düzey": [parathormon, kalsitonin]
-    })
-
-    st.bar_chart(df2.set_index("Hormon"))
-
-    if parathormon > kalsitonin:
-        st.warning("⚠️ Parathormon baskın → Kemikten kana kalsiyum geçişi artar")
-    elif kalsitonin > parathormon:
-        st.success("✅ Kalsitonin baskın → Kalsiyum kemikte tutulur")
-    else:
-        st.info("ℹ️ Kalsiyum dengede → İskelet sistemi homeostazı")
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
+
 

@@ -5,12 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 # SOL PANEL (SIDEBAR) EKLEYELİM
 with st.sidebar:
-    # Hareketli (GIF) İnsan Vücudu / Dijital İkiz Figürü
-    # Bu URL, dönen bir teknolojik insan figürünü temsil eder
-    st.markdown(
-        """
-        <div style="display: flex; justify-content: center;">
-            <img src="
+    st.image("https://cdn-icons-png.flaticon.com/512/2865/2865914.png", width=80)
     st.title("BioTwin Dashboard")
     st.markdown("---")
     st.info("""
@@ -312,6 +307,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

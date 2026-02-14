@@ -146,75 +146,71 @@ with tabs[2]:
     st.header("Tiroksin ve HPT Aksı: Negatif Feedback Mekanizması")
     
     # 1. GİRDİ ALANI: Tiroit Bezi Aktivitesi
-    # Öğrenci tiroit bezinin ne kadar çalıştığını seçer
-    tiroit_aktivite = st.slider("Tiroit Bezi Çalışma Hızı (%)", 0, 200, 100)
+    tiroit_aktivite = st.slider("Tiroit Bezi Çalışma Kapasitesi (%)", 0, 200, 100)
     
-    # 2. FEEDBACK MANTIĞI
-    # Tiroksin (T4), tiroit aktivitesine bağlıdır.
+    # 2. FEEDBACK MANTIĞI (Dijital İkiz Hesaplaması)
+    # Tiroksin (T4), tiroit bezinin aktivitesine bağlı üretilir.
     tiroksin = tiroit_aktivite * 0.5
     
-    # Negatif Feedback: Tiroksin arttıkça Hipofiz'den salgılanan TSH azalır.
+    # Negatif Feedback: Tiroksin arttıkça Hipofiz'den salgılanan TSH azalır (Gaz-Fren ilişkisi).
     tsh = max(0.1, 100 - (tiroksin * 1.5))
 
-    # 3. GÖRSELLEŞTİRME: Çift Eksenli Grafik veya İki Gösterge
+    # 3. GÖRSEL METRİKLER
     col_t1, col_t2 = st.columns(2)
     with col_t1:
-        st.metric("Tiroksin (T4) Seviyesi", f"{tiroksin:.1f}", delta="Yüksek" if tiroksin > 60 else "Normal")
+        st.metric("Tiroksin (T4) Seviyesi", f"{tiroksin:.1f}", 
+                  delta="Yüksek (Hiper)" if tiroksin > 65 else ("Düşük (Hipo)" if tiroksin < 35 else "Normal"))
     with col_t2:
-        st.metric("TSH (Hipofiz Yanıtı)", f"{tsh:.1f}", delta=f"-{100-tsh:.1f}", delta_color="inverse")
+        st.metric("TSH (Hipofiz Yanıtı)", f"{tsh:.1f}", 
+                  delta="Baskılanmış" if tsh < 20 else ("Uyarıcı" if tsh > 80 else "Dengeli"), 
+                  delta_color="inverse")
 
-    # Bar Grafik ile Feedback Gösterimi
+    # 4. GÖRSELLEŞTİRME: Bar Grafik
     import plotly.graph_objects as go
     fig_tiroit = go.Figure()
     fig_tiroit.add_trace(go.Bar(
-        x=['TSH (Uyarıcı)', 'Tiroksin (Sonuç)'],
+        x=['TSH (Hipofiz Uyarıcı)', 'Tiroksin (Tiroit Yanıtı)'],
         y=[tsh, tiroksin],
         marker_color=['#9b59b6', '#3498db'], # Mor ve Mavi
         text=[f"TSH: {tsh:.1f}", f"T4: {tiroksin:.1f}"],
         textposition='auto'
     ))
-    fig_tiroit.update_layout(title="Hipofiz - Tiroit Geri Bildirim Dengesi", yaxis_range=[0, 150])
+    fig_tiroit.update_layout(title="HPT Aksı: Dinamik Geri Bildirim Dengesi", yaxis_range=[0, 150])
     st.plotly_chart(fig_tiroit, use_container_width=True)
 
-   st.divider()
+    st.divider()
 
-    # 4. AKADEMİK BİLGİ ALANI (Ders Materyali)
-    st.subheader("📚 Klinik Bilgi Paneli: Metabolik Durumlar")
+    # 5. AKADEMİK BİLGİ ALANI (Ders Materyali)
+    st.subheader("📚 Klinik Bilgi Paneli: Tiroit Fizyopatolojisi")
     
-    # Klinik Durum Karşılaştırma Tablosu
+    st.info("💡 **Negatif Feedback Mekanizması:** Kanda Tiroksin (T4) yükseldiğinde, Hipofiz bezi bunu algılar ve tiroit bezini daha fazla uyarmamak için TSH salgısını azaltır. Bu bir öz-denetim sistemidir.")
+
     col_symp1, col_symp2 = st.columns(2)
 
     with col_symp1:
-        st.error("🔥 Hipertiroidi (T4 Yüksek / TSH Düşük)")
+        st.error("🔥 Hipertiroidi (Zehirli Guatr)")
         st.markdown("""
-        **Vücuttaki Belirtiler:**
-        * **Metabolizma:** Çok hızlıdır, istirahatte bile enerji harcanır.
-        * **Kilo:** İştah artışına rağmen hızlı kilo kaybı görülür.
-        * **Kalp:** Çarpıntı (Taşikardi) ve yüksek tansiyon.
-        * **Sinir Sistemi:** Aşırı sinirlilik, ellerde titreme ve uykusuzluk.
-        * **Isı Toleransı:** Sıcağa tahammülsüzlük ve aşırı terleme.
-        * **Gözler:** Ekzoftalmi (Göz kürelerinin dışa fırlaması - Basedow Graves).
+        **Kanda T4 Yüksek, TSH Düşüktür.**
+        * **Metabolizma:** Aşırı hızlanır, bazal enerji tüketimi artar.
+        * **Kardiyovasküler:** Çarpıntı (Taşikardi) ve yüksek tansiyon.
+        * **Sinir Sistemi:** Titreme (tremor), huzursuzluk ve uykusuzluk.
+        * **Fiziksel:** Sıcağa tahammülsüzlük, aşırı terleme ve hızlı kilo kaybı.
         """)
 
     with col_symp2:
-        st.warning("❄️ Hipotiroidi (T4 Düşük / TSH Yüksek)")
+        st.warning("❄️ Hipotiroidi")
         st.markdown("""
-        **Vücuttaki Belirtiler:**
-        * **Metabolizma:** Çok yavaştır, vücut enerji tasarrufuna geçer.
-        * **Kilo:** Az yemesine rağmen kilo alma ve ödem (Miksödem).
-        * **Kalp:** Nabız yavaşlaması (Bradikardi).
-        * **Zihinsel Durum:** Unutkanlık, konsantrasyon güçlüğü ve depresif ruh hali.
-        * **Isı Toleransı:** Soğuğa tahammülsüzlük ve sürekli üşüme hissi.
-        * **Deri/Saç:** Ciltte kuruluk, saç dökülmesi ve ses kalınlaşması.
+        **Kanda T4 Düşük, TSH Yüksektir.**
+        * **Metabolizma:** Yavaşlar, vücut ısısı düşer.
+        * **Kilo:** İştahsızlığa rağmen kilo alma ve vücutta ödem.
+        * **Zihinsel:** Unutkanlık, yavaş düşünme ve depresyon eğilimi.
+        * **Fiziksel:** Soğuğa tahammülsüzlük, halsizlik ve cilt kuruluğu.
         """)
 
-    # 5. ÖĞRENCİLER İÇİN ÖZET NOT
+    # 6. ÖĞRENCİLER İÇİN ÖZET
     st.info("""
-    💡 **Öğretmen Notu:** TSH ve T4 arasındaki ilişkiyi 'gaz ve fren' gibi düşünebilirsiniz. 
-    Eğer T4 (araba hızı) çok fazlaysa, Hipofiz TSH (gaz) vermeyi keser. 
-    Eğer T4 çok düşükse, Hipofiz TSH'ı kökler ki vücut hızlansın.
+    **HPT Aksı Akış Şeması:** Hipotalamus (TRH) ➡️ Ön Hipofiz (TSH) ➡️ Tiroit Bezi (T4) ➡️ Hedef Dokular.
     """)
-   
 # ------------------------------------------------
 # PARATHORMON – KALSİTONİN SEKME
 # ------------------------------------------------
@@ -288,6 +284,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

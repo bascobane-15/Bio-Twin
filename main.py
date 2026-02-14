@@ -85,7 +85,7 @@ st.write(f"**Kan Şekeri:** {round(last['Kan Şekeri'],1)}")
 st.write(f"**İnsülin Duyarlılığı:** {round(last['İnsülin'],1)}")
 st.write(f"**Bağışıklık İndeksi:** {round(last['Bağışıklık'],1)}")
 st.write(f"**Homeostaz Skoru:** {round(last['Homeostaz'],1)}")
-# ---------------------------
+ # ---------------------------
 # AVATAR GÖRSELİ
 # ---------------------------
 
@@ -104,49 +104,21 @@ abdomen_color = "orange" if G_val > 70 else "lightgray"
 body_color = "red" if H_val < 50 else "#cccccc"
 opacity = 0.5 if B_val < 60 else 1
 
-
-# Renk hesaplama
-if homeostasis > 70:
-    body_color = "#00FFFF"
-elif homeostasis > 40:
-    body_color = "#FFD700"
-else:
-    body_color = "#FF3B3B"
-
-brain_glow = min(1, stress / 10)
-
-svg_code = f"""
-<svg width="300" height="500" viewBox="0 0 300 500">
-<style>
-@keyframes pulse {{
-  0% {{ opacity: 0.7; }}
-  50% {{ opacity: 1; }}
-  100% {{ opacity: 0.7; }}
-}}
-
-.hologram {{
-  fill: {body_color};
-  opacity: 0.6;
-  animation: pulse 2s infinite;
-}}
-
-.brain {{
-  fill: yellow;
-  opacity: {brain_glow};
-}}
-</style>
-
-<ellipse cx="150" cy="250" rx="90" ry="200" fill="{body_color}" opacity="0.2"/>
-<ellipse cx="150" cy="250" rx="70" ry="180" class="hologram"/>
-<circle cx="150" cy="80" r="50" class="hologram"/>
-<circle cx="150" cy="70" r="20" class="brain"/>
+avatar_html = f"""
+<svg width="300" height="500" viewBox="0 0 200 400">
+    <!-- Body -->
+    <ellipse cx="100" cy="200" rx="60" ry="120" fill="{body_color}" opacity="{opacity}" />
+    
+    <!-- Head -->
+    <circle cx="100" cy="80" r="40" fill="{body_color}" opacity="{opacity}" />
+    
+    <!-- Brain (Stress Area) -->
+    <circle cx="100" cy="70" r="15" fill="{brain_color}" />
+    
+    <!-- Abdomen (Metabolic Area) -->
+    <ellipse cx="100" cy="220" rx="30" ry="40" fill="{abdomen_color}" />
 </svg>
 """
 
-st.markdown(svg_code, unsafe_allow_html=True)
-
-
-
-
-
-
+st.markdown(avatar_html, unsafe_allow_html=True)
+   

@@ -52,26 +52,41 @@ with tabs[0]:
 # İNSÜLİN SEKME
 # ------------------------------------------------
 with tabs[1]:
-       st.subheader("İnsülin – Glukagon Antagonizması")
+    st.header("İnsülin – Glukagon Dengesi (Antagonist Hormonlar)")
 
     glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
 
     insulin = max(0, glucose - 30)
     glucagon = max(0, 70 - glucose)
 
-    df = pd.DataFrame({
-        "Hormon": ["İnsülin", "Glukagon"],
-        "Düzey": [insulin, glucagon]
-    })
-
-    st.bar_chart(df.set_index("Hormon"))
+    st.metric("İnsülin Düzeyi", insulin)
+    st.metric("Glukagon Düzeyi", glucagon)
 
     if insulin > glucagon:
         st.success("✅ İnsülin baskın → Kan şekeri düşürülüyor")
     elif glucagon > insulin:
         st.warning("⚠️ Glukagon baskın → Kan şekeri yükseltiliyor")
     else:
-        st.info("ℹ️ Hormonlar dengede → Homeostaz sağlanıyor")
+        st.info("ℹ️ Denge durumu")
+
+    if insulin < 20:
+        st.error("""
+        ❗ **İnsülin Eksikliği**
+        - Kan şekeri yükselir  
+        - Hücreler glikozu kullanamaz  
+
+        **İlişkili Hastalık:**  
+        - Diyabet
+        """)
+
+    if glucagon > 70:
+        st.warning("""
+        ⚠️ **Glukagon Fazlalığı**
+        - Sürekli kan şekeri yükselmesi  
+
+        **İlişkili Durum:**  
+        - Hiperglisemi
+        """)
 
     
    
@@ -111,6 +126,7 @@ with tabs[2]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

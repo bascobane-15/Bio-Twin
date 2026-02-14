@@ -81,6 +81,26 @@ with tabs[1]:
         """)
     else:
         st.success("✅ İnsülin dengede. Kan şekeri kontrol altında.")
+    st.subheader("İnsülin – Glukagon Antagonizması")
+
+    glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
+
+    insulin = max(0, glucose - 30)
+    glucagon = max(0, 70 - glucose)
+
+    df = pd.DataFrame({
+        "Hormon": ["İnsülin", "Glukagon"],
+        "Düzey": [insulin, glucagon]
+    })
+
+    st.bar_chart(df.set_index("Hormon"))
+
+    if insulin > glucagon:
+        st.success("✅ İnsülin baskın → Kan şekeri düşürülüyor")
+    elif glucagon > insulin:
+        st.warning("⚠️ Glukagon baskın → Kan şekeri yükseltiliyor")
+    else:
+        st.info("ℹ️ Hormonlar dengede → Homeostaz sağlanıyor")
 
 # ------------------------------------------------
 # TİROKSİN SEKME
@@ -118,6 +138,7 @@ with tabs[2]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

@@ -21,48 +21,63 @@ tabs = st.tabs([
 # KORTİZOL SEKME
 # ------------------------------------------------
 with tabs[0]:
-    st.header("Kortizol: Stres ve Yıkım Dengesi")
+    st.header("Kortizol: Stres ve Sistemik Etkiler")
     
-    # Tek bir slider, net sonuç
-    stress = st.slider("Maruz Kalınan Stres Düzeyi", 0, 100, 50)
+    # 1. GİRDİ ALANI
+    stress = st.slider("Stres Düzeyi (Psikolojik/Fiziksel)", 0, 100, 50)
     
-    # Matematiksel Model (Basit ve etkili)
-    kortizol_seviyesi = stress * 1.2 # Stres arttıkça kortizol hızla fırlar
-    yikim_etkisi = max(0, stress - 60) # 60 birimden sonra vücut zarar görmeye başlar
-
-    # Görsel Kartlar
-    c1, c2 = st.columns(2)
-    c1.metric("Kortizol Miktarı", f"{kortizol_seviyesi:.1f} units")
-    c2.metric("Doku Yıkım Riski", f"%{yikim_etkisi}", delta="-Kritik" if yikim_etkisi > 0 else "Normal", delta_color="inverse")
-
-    # DAHA ETKİLEYİCİ BİR GÖRSEL: Plotly Gauge (Hız Göstergesi)
+    # Matematiksel Hesaplama
+    kortizol_seviyesi = stress * 1.15
+    
+    # 2. GÖRSEL GÖSTERGE (Gauge)
     import plotly.graph_objects as go
-    
     fig = go.Figure(go.Indicator(
         mode = "gauge+number",
         value = kortizol_seviyesi,
-        title = {'text': "Kortizol Tepe Noktası"},
+        title = {'text': "Kortizol Konsantrasyonu"},
         gauge = {
             'axis': {'range': [None, 120]},
             'bar': {'color': "darkred"},
             'steps' : [
-                {'range': [0, 40], 'color': "lightgreen"},
-                {'range': [40, 80], 'color': "orange"},
-                {'range': [80, 120], 'color': "red"}],
-            'threshold': {
-                'line': {'color': "black", 'width': 4},
-                'thickness': 0.75,
-                'value': 90}}))
-    
+                {'range': [0, 40], 'color': "#d9f2d9"},
+                {'range': [40, 80], 'color': "#ffebcc"},
+                {'range': [80, 120], 'color': "#ffcccc"}],
+            'threshold': {'line': {'color': "black", 'width': 4}, 'value': 100}}))
     st.plotly_chart(fig, use_container_width=True)
 
-    # Dinamik ve Sert Uyarılar
+    st.divider()
+
+    # 3. AKADEMİK BİLGİ ALANI (Ders Materyali Bölümü)
+    st.subheader("📚 Klinik Bilgi Paneli: Kortizol Artışının Etkileri")
+    
+    col_info1, col_info2 = st.columns(2)
+
+    with col_info1:
+        st.markdown("""
+        **1. Metabolik Etkiler:**
+        * **Glukoneojenez:** Karaciğerde glikoz üretimini artırarak kan şekerini yükseltir.
+        * **Protein Katabolizması:** Kas dokusunda protein yıkımına neden olur (kas zayıflığı).
+        * **Lipoliz:** Yağların parçalanıp kanda serbest yağ asitlerinin artmasına yol açar.
+        
+        **2. Bağışıklık Sistemi:**
+        * **İmmünsupresyon:** Lökosit aktivitesini baskılayarak bağışıklığı zayıflatır.
+        * **Anti-inflamatuar:** Enflamasyonu (yangıyı) azaltır (Bu yüzden ilaç olarak kullanılır).
+        """)
+
+    with col_info2:
+        st.markdown("""
+        **3. Kardiyovasküler Etkiler:**
+        * **Hipertansiyon:** Kan damarlarının adrenalin gibi maddelere duyarlılığını artırarak tansiyonu yükseltir.
+        
+        **4. Uzun Vadeli (Kronik) Sonuçlar:**
+        * **Cushing Sendromu:** Kronik yüksek kortizol sonucu oluşan klinik tablo.
+        * **Obezite:** Özellikle gövde ve yüz bölgesinde (ay dede yüzü) yağlanma.
+        * **Osteoporoz:** Kemik yapımını azaltıp yıkımını hızlandırır.
+        """)
+
+    # 4. DİNAMİK ÖĞRENCİ NOTU
     if stress > 80:
-        st.error("🚨 **KRONİK STRES TESPİT EDİLDİ:** Kas yıkımı ve hafıza sorunları başlayabilir.")
-    elif stress > 50:
-        st.warning("⚠️ **ALARM FAZI:** Vücut sürekli tetikte, dinlenme moduna geçilemiyor.")
-    else:
-        st.success("🍀 **RELAX MOD:** Kortizol seviyesi yenilenme için uygun.")
+        st.info("💡 **Eğitim Notu:** Şu anki yüksek değerler, vücudun 'Savaş veya Kaç' (Fight or Flight) modunda takılı kaldığını simüle ediyor. Bu durumda protein yıkımı (kas erimesi) maksimumdadır.")
 # ------------------------------------------------
 # İNSÜLİN SEKME
 # ------------------------------------------------
@@ -244,6 +259,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

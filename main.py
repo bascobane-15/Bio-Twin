@@ -45,11 +45,11 @@ svg_code = f"""
   50% {{ opacity: 1; }}
   100% {{ opacity: 0.7; }}
 }}
-
-.hologram {{
-  fill: {body_color};
+.hologram {
+  fill: """ + body_color + """;
   opacity: 0.6;
   animation: pulse 2s infinite;
+  filter: drop-shadow(0 0 15px """ + body_color + """);
 }}
 
 .brain {{
@@ -73,7 +73,15 @@ svg_code = f"""
 </svg>
 """
 
-st.markdown(svg_code, unsafe_allow_html=True)
+st.markdown("""
+<style>
+.stApp {
+    background-color: #0E1117;
+    color: white;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 
 

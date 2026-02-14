@@ -51,7 +51,6 @@ with tabs[0]:
         """)
     else:
         st.success("✅ Kortizol dengede. Homeostaz korunuyor.")
-
 # ------------------------------------------------
 # İNSÜLİN SEKME
 # ------------------------------------------------
@@ -214,6 +213,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

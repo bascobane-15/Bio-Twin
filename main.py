@@ -188,13 +188,28 @@ with tabs[3]:
     col2.metric("Kalsitonin", kalsitonin)
 
     # ANTİAGONİST HORMON GRAFİĞİ
-    df = pd.DataFrame({
-        "Hormon": ["Parathormon (PTH)", "Kalsitonin"],
-        "Düzey": [parathormon, kalsitonin]
-    })
+   # PLOTLY İLE ETKİLEŞİMLİ GRAFİK
+    import plotly.graph_objects as go
 
-    st.subheader("Antagonist Hormonlar – Aynı Grafikte")
-    st.bar_chart(df.set_index("Hormon"))
+    fig = go.Figure()
+
+    # Parathormon Çubuğu
+    fig.add_trace(go.Bar(
+        x=['Parathormon (PTH)', 'Kalsitonin'],
+        y=[parathormon, kalsitonin],
+        marker_color=['#FFA500', '#00CED1'], # Turuncu ve Turkuaz renkler
+        text=[f"%{parathormon:.1f}", f"%{kalsitonin:.1f}"],
+        textposition='auto',
+    ))
+
+    fig.update_layout(
+        title_text='Hormonların Dinamik Dengesi',
+        yaxis_range=[0, 100],
+        template='plotly_white',
+        height=400
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
 
     # FİZYOLOJİK VE KLİNİK YORUM
     if parathormon > kalsitonin:
@@ -219,6 +234,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

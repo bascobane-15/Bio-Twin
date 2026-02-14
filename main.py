@@ -232,10 +232,14 @@ with tabs[3]:
     
     # Kalsiyum arttıkça Kalsitonin tavan yapar.
     kalsitonin = max(0.0, (calcium - 8.0) * 25)
-    # HORMON DÜZEYLERİ GÖSTERİM
+   # HORMON DÜZEYLERİ (Yuvarlama eklendi)
+    parathormon = round(max(0.0, (12.0 - calcium) * 25), 1) 
+    kalsitonin = round(max(0.0, (calcium - 8.0) * 25), 1)
+
+    # GÖSTERİM (Metriklerin içinde de formatlama yapıyoruz)
     col1, col2 = st.columns(2)
-    col1.metric("Parathormon (PTH)", parathormon)
-    col2.metric("Kalsitonin", kalsitonin)
+    col1.metric("Parathormon (PTH)", f"{parathormon}")
+    col2.metric("Kalsitonin", f"{kalsitonin}")
 
     # ANTİAGONİST HORMON GRAFİĞİ
    # PLOTLY İLE ETKİLEŞİMLİ GRAFİK
@@ -284,6 +288,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

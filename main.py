@@ -15,7 +15,7 @@ with st.sidebar:
         """,
         unsafe_allow_html=True
     )
-    st.title("BioTwin Dashboard")
+ 
     st.markdown("---")
     st.info("""
     **Proje Vizyonu:**
@@ -316,6 +316,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

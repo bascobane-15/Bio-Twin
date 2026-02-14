@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="BioTwin-Systems", layout="centered")
 
 st.title("🧠 BioTwin-Systems")
-st.subheader("Sinir ve Endokrin Sistem Dijital İkizi")
+st.subheader("Endokrin Sistem Dijital İkizi")
 st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
 
 st.divider()
@@ -217,6 +217,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

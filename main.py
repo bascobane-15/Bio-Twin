@@ -1,21 +1,14 @@
 import streamlit as st
 import pandas as pd
-
-
-st.set_page_config(page_title="BioTwin-Systems", layout="centered")
-
-st.title("🧠 BioTwin-Systems")
-st.subheader("Sinir ve Endokrin Sistem Dijital İkizi")
-st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
-
-st.divider()
+import matplotlib.pyplot as plt
 
 tabs = st.tabs([
-    "🟠 Kortizol",
-    "🔵 İnsülin",
-    "🟣 Tiroksin",
-    "🟢 Parathormon–Kalsitonin"
+    "Kortizol",
+    "İnsülin",
+    "Tiroksin",
+    "Parathormon – Kalsitonin"
 ])
+
 
 # ------------------------------------------------
 # KORTİZOL SEKME
@@ -164,57 +157,73 @@ with tabs[2]:
 # ------------------------------------------------
 # PARATHORMON – KALSİTONİN SEKME
 # ------------------------------------------------
+
 with tabs[3]:
     st.header("Parathormon – Kalsitonin (Kalsiyum Dengesi)")
 
     st.markdown("""
     Parathormon (PTH) ve kalsitonin hormonları **antagonist** etki göstererek
-    kandaki kalsiyum düzeyinin düzenlenmesini sağlar.
+    kandaki kalsiyum dengesinin (homeostaz) korunmasını sağlar.
     """)
 
-    # FİZYOLOJİK GİRDİ
-    calcium = st.slider("Kandaki Kalsiyum Düzeyi", 0, 100, 50)
+    # KALSİYUM SEVİYESİ
+    calcium = st.slider(
+        "Kandaki Kalsiyum Seviyesi",
+        min_value=5.0,
+        max_value=12.0,
+        value=9.5,
+        step=0.1
+    )
 
-    # HORMON DÜZEYLERİ (basitleştirilmiş model)
-    parathormon = max(0, 70 - calcium)
-    kalsitonin = max(0, calcium - 30)
+    # BASİT MODEL
+    parathormon = max(0, 10 - calcium) * 10
+    calcitonin = max(0, calcium - 9) * 10
 
-    # HORMON DÜZEYLERİ GÖSTERİM
+    # GÖSTERGELER
     col1, col2 = st.columns(2)
-    col1.metric("Parathormon (PTH)", parathormon)
-    col2.metric("Kalsitonin", kalsitonin)
+    col1.metric("Parathormon Düzeyi", f"{parathormon:.1f}")
+    col2.metric("Kalsitonin Düzeyi", f"{calcitonin:.1f}")
 
-    # ANTİAGONİST HORMON GRAFİĞİ
+    # ANTAGONİST GRAFİK
     df = pd.DataFrame({
-        "Hormon": ["Parathormon (PTH)", "Kalsitonin"],
-        "Düzey": [parathormon, kalsitonin]
+        "Hormon": ["Parathormon", "Kalsitonin"],
+        "Düzey": [parathormon, calcitonin]
     })
 
-    st.subheader("Antagonist Hormonlar – Aynı Grafikte")
-    st.bar_chart(df.set_index("Hormon"))
+    fig, ax = plt.subplots()
+    ax.bar(df["Hormon"], df["Düzey"])
+    ax.set_ylabel("Hormon Düzeyi (Göreceli)")
+    ax.set_title("Parathormon – Kalsitonin Antagonist Etkisi")
+    st.pyplot(fig)
 
-    # FİZYOLOJİK VE KLİNİK YORUM
-    if parathormon > kalsitonin:
-        st.warning("""
-        ⚠️ **Parathormon Baskın**
-        - Kemiklerden kana kalsiyum geçişi artar  
-        - Kemik mineral yoğunluğu azalabilir  
+    # KLİNİK SENARYO
+    st.subheader("Klinik Senaryo")
 
-        **İlişkili Durum:**  
-        - Osteoporoz riski
+    if calcium < 8:
+        st.error("""
+        🔴 **Hipokalsemi**
+        - Parathormon artar
+        - Kaslarda ağrılı kasılmalar ve titremeler
+        - Tetani riski
         """)
-    elif kalsitonin > parathormon:
-        st.success("""
-        ✅ **Kalsitonin Baskın**
-        - Kalsiyum kemiklerde tutulur  
-        - Kemik yapısı korunur
+    elif calcium > 11:
+        st.warning("""
+        🟠 **Hiperkalsemi**
+        - Parathormon baskılanır
+        - Böbrek taşı riski
+        - Kemik mineral kaybı
         """)
     else:
-        st.info("ℹ️ Kalsiyum dengede → İskelet sistemi homeostazı sağlanıyor")
+        st.success("""
+        🟢 **Normal Kalsiyum Dengesi**
+        - Parathormon ve kalsitonin dengede
+        - Homeostaz sağlanmış durumda
+        """)
 
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

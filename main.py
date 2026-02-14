@@ -52,41 +52,75 @@ with tabs[0]:
 # İNSÜLİN SEKME
 # ------------------------------------------------
 with tabs[1]:
-    st.header("İnsülin – Glukagon Dengesi (Antagonist Hormonlar)")
+    st.header("İnsülin Hormonu (Kan Şekeri Düzenleyici)")
 
+    st.markdown("""
+    İnsülin ve glukagon hormonları **antagonist** etki göstererek
+    kan şekeri dengesinin (homeostaz) sağlanmasında rol oynar.
+    """)
+
+    # ÇEVRESEL / FİZYOLOJİK GİRDİ
     glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
 
+    # HORMON DÜZEYLERİ (basitleştirilmiş model)
     insulin = max(0, glucose - 30)
     glucagon = max(0, 70 - glucose)
 
-    st.metric("İnsülin Düzeyi", insulin)
-    st.metric("Glukagon Düzeyi", glucagon)
+    # HORMON DÜZEYLERİ GÖSTERİM
+    col1, col2 = st.columns(2)
+    col1.metric("İnsülin Düzeyi", insulin)
+    col2.metric("Glukagon Düzeyi", glucagon)
 
+    # ANTİAGONİST HORMON GRAFİĞİ
+    df = pd.DataFrame({
+        "Hormon": ["İnsülin", "Glukagon"],
+        "Düzey": [insulin, glucagon]
+    })
+
+    st.subheader("Antagonist Hormonlar – Aynı Grafikte")
+    st.bar_chart(df.set_index("Hormon"))
+
+    # FİZYOLOJİK YORUM
     if insulin > glucagon:
-        st.success("✅ İnsülin baskın → Kan şekeri düşürülüyor")
+        st.success("""
+        ✅ **İnsülin Baskın**
+        - Hücrelere glikoz girişi artar  
+        - Kan şekeri düşürülür  
+        - Homeostaz korunur
+        """)
     elif glucagon > insulin:
-        st.warning("⚠️ Glukagon baskın → Kan şekeri yükseltiliyor")
+        st.warning("""
+        ⚠️ **Glukagon Baskın**
+        - Karaciğerde glikojen yıkımı artar  
+        - Kana glikoz verilir  
+        - Kan şekeri yükselir
+        """)
     else:
-        st.info("ℹ️ Denge durumu")
+        st.info("ℹ️ İnsülin ve glukagon dengede → Kan şekeri dengesi sağlanıyor")
+
+    # HASTALIK SENARYOLARI
+    st.subheader("Hormon Dengesizliğinde Oluşan Durumlar")
 
     if insulin < 20:
         st.error("""
         ❗ **İnsülin Eksikliği**
-        - Kan şekeri yükselir  
-        - Hücreler glikozu kullanamaz  
+        - Hiperglisemi (kan şekeri yüksekliği)
+        - Hücreler glikozu kullanamaz
 
         **İlişkili Hastalık:**  
-        - Diyabet
+        - Diyabet (Tip 1 benzeri tablo)
         """)
 
-    if glucagon > 70:
+    if insulin > 80:
         st.warning("""
-        ⚠️ **Glukagon Fazlalığı**
-        - Sürekli kan şekeri yükselmesi  
+        ⚠️ **İnsülin Fazlalığı**
+        - Hipoglisemi (kan şekeri düşüklüğü)
+        - Baş dönmesi, bilinç bulanıklığı
 
         **İlişkili Durum:**  
-        - Hiperglisemi
+        - Reaktif hipoglisemi
         """)
+
 
 
 # ------------------------------------------------
@@ -125,6 +159,7 @@ with tabs[2]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

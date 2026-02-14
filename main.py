@@ -2,8 +2,20 @@ import streamlit as st
 import pandas as pd
 
 
-st.set_page_config(page_title="BioTwin-Systems", layout="centered")
-
+st.set_page_config(page_title="BioTwin-Systems", layout="wide")
+# SOL PANEL (SIDEBAR) EKLEYELİM
+with st.sidebar:
+    st.image("https://cdn-icons-png.flaticon.com/512/2865/2865914.png", width=80)
+    st.title("BioTwin Dashboard")
+    st.markdown("---")
+    st.info("""
+    **Dijital İkiz Hakkında:**
+    Bu materyal, **NursTwin-Home** projesi kapsamında endokrin sistemin dinamiklerini öğretmek için geliştirilmiştir.
+    """)
+    
+    st.subheader("Simülasyon Durumu")
+    st.success("🟢 Sistem Aktif")
+    
 st.title("🧠 BioTwin-Systems")
 st.subheader("Endokrin Sistem Dijital İkizi")
 st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
@@ -288,6 +300,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

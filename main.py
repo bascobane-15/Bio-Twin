@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+
 
 st.set_page_config(page_title="BioTwin-Systems", layout="centered")
 
@@ -213,6 +215,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

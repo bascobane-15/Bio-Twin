@@ -52,36 +52,7 @@ with tabs[0]:
 # İNSÜLİN SEKME
 # ------------------------------------------------
 with tabs[1]:
-    st.header("İnsülin Hormonu (Kan Şekeri Düzenleyici)")
-
-    nutrition = st.slider("Beslenme / Glikoz Alımı", 0, 100, 60)
-    insulin = nutrition
-
-    st.metric("İnsülin Düzeyi", insulin)
-
-    if insulin < 30:
-        st.error("❗ İnsülin Eksikliği")
-        st.markdown("""
-        **Olası Sonuçlar:**
-        - Kan şekerinin yükselmesi (hiperglisemi)  
-        - Hücrelere glikoz girişi azalır  
-
-        **İlişkili Hastalık:**
-        - Diyabet (Tip 1 benzeri tablo)
-        """)
-    elif insulin > 70:
-        st.warning("⚠️ İnsülin Fazlalığı")
-        st.markdown("""
-        **Olası Sonuçlar:**
-        - Kan şekerinin aşırı düşmesi (hipoglisemi)  
-        - Baş dönmesi, bilinç bulanıklığı  
-
-        **İlişkili Durum:**
-        - Reaktif hipoglisemi
-        """)
-    else:
-        st.success("✅ İnsülin dengede. Kan şekeri kontrol altında.")
-    st.subheader("İnsülin – Glukagon Antagonizması")
+       st.subheader("İnsülin – Glukagon Antagonizması")
 
     glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
 
@@ -102,6 +73,8 @@ with tabs[1]:
     else:
         st.info("ℹ️ Hormonlar dengede → Homeostaz sağlanıyor")
 
+    
+   
 # ------------------------------------------------
 # TİROKSİN SEKME
 # ------------------------------------------------
@@ -138,6 +111,7 @@ with tabs[2]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

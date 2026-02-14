@@ -170,66 +170,54 @@ with tabs[3]:
 
     st.markdown("""
     Parathormon (PTH) ve kalsitonin hormonları **antagonist** etki göstererek
-    kandaki kalsiyum dengesinin (homeostaz) korunmasını sağlar.
+    kandaki kalsiyum düzeyinin düzenlenmesini sağlar.
     """)
 
-    # KALSİYUM SEVİYESİ
-    calcium = st.slider(
-        "Kandaki Kalsiyum Seviyesi",
-        min_value=5.0,
-        max_value=12.0,
-        value=9.5,
-        step=0.1
-    )
+    # FİZYOLOJİK GİRDİ
+    calcium = st.slider("Kandaki Kalsiyum Düzeyi", 0, 100, 50)
 
-    # BASİT MODEL
-    parathormon = max(0, 10 - calcium) * 10
-    calcitonin = max(0, calcium - 9) * 10
+    # HORMON DÜZEYLERİ (basitleştirilmiş model)
+    parathormon = max(0, 70 - calcium)
+    kalsitonin = max(0, calcium - 30)
 
-    # GÖSTERGELER
+    # HORMON DÜZEYLERİ GÖSTERİM
     col1, col2 = st.columns(2)
-    col1.metric("Parathormon Düzeyi", f"{parathormon:.1f}")
-    col2.metric("Kalsitonin Düzeyi", f"{calcitonin:.1f}")
+    col1.metric("Parathormon (PTH)", parathormon)
+    col2.metric("Kalsitonin", kalsitonin)
 
-    # ANTAGONİST GRAFİK
+    # ANTİAGONİST HORMON GRAFİĞİ
     df = pd.DataFrame({
-        "Hormon": ["Parathormon", "Kalsitonin"],
-        "Düzey": [parathormon, calcitonin]
+        "Hormon": ["Parathormon (PTH)", "Kalsitonin"],
+        "Düzey": [parathormon, kalsitonin]
     })
 
-    fig, ax = plt.subplots()
-    ax.bar(df["Hormon"], df["Düzey"])
-    ax.set_ylabel("Hormon Düzeyi (Göreceli)")
-    ax.set_title("Parathormon – Kalsitonin Antagonist Etkisi")
-    st.pyplot(fig)
+    st.subheader("Antagonist Hormonlar – Aynı Grafikte")
+    st.bar_chart(df.set_index("Hormon"))
 
-    # KLİNİK SENARYO
-    st.subheader("Klinik Senaryo")
-
-    if calcium < 8:
-        st.error("""
-        🔴 **Hipokalsemi**
-        - Parathormon artar
-        - Kaslarda ağrılı kasılmalar ve titremeler
-        - Tetani riski
-        """)
-    elif calcium > 11:
+    # FİZYOLOJİK VE KLİNİK YORUM
+    if parathormon > kalsitonin:
         st.warning("""
-        🟠 **Hiperkalsemi**
-        - Parathormon baskılanır
-        - Böbrek taşı riski
-        - Kemik mineral kaybı
+        ⚠️ **Parathormon Baskın**
+        - Kemiklerden kana kalsiyum geçişi artar  
+        - Kemik mineral yoğunluğu azalabilir  
+
+        **İlişkili Durum:**  
+        - Osteoporoz riski
+        """)
+    elif kalsitonin > parathormon:
+        st.success("""
+        ✅ **Kalsitonin Baskın**
+        - Kalsiyum kemiklerde tutulur  
+        - Kemik yapısı korunur
         """)
     else:
-        st.success("""
-        🟢 **Normal Kalsiyum Dengesi**
-        - Parathormon ve kalsitonin dengede
-        - Homeostaz sağlanmış durumda
-        """)
+        st.info("ℹ️ Kalsiyum dengede → İskelet sistemi homeostazı sağlanıyor")
+
 
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

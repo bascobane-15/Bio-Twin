@@ -21,52 +21,48 @@ tabs = st.tabs([
 # KORTİZOL SEKME
 # ------------------------------------------------
 with tabs[0]:
-    st.header("Kortizol Hormonu (Stres ve Yaşam Ritmi)")
+    st.header("Kortizol: Stres ve Yıkım Dengesi")
     
-    # İKİNCİL GİRDİ: GÜNÜN SAATİ (Sirkadiyen Ritim için)
-    saat = st.select_slider(
-        "Günün Hangi Saatindeyiz?",
-        options=["06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "00:00", "03:00"],
-        value="09:00"
-    )
-
-    # ANA GİRDİ: STRES DÜZEYİ
-    stress = st.slider("Psikolojik/Fiziksel Stres Düzeyi", 0, 100, 50)
-
-    # DİJİTAL İKİZ HESAPLAMA MANTIĞI
-    # Sirkadiyen baz puanları (Sabah yüksek, gece düşük)
-    ritim_puanlari = {
-        "06:00": 70, "09:00": 90, "12:00": 60, "15:00": 40, 
-        "18:00": 30, "21:00": 20, "00:00": 10, "03:00": 30
-    }
-    baz_kortizol = ritim_puanlari[saat]
+    # Tek bir slider, net sonuç
+    stress = st.slider("Maruz Kalınan Stres Düzeyi", 0, 100, 50)
     
-    # Toplam Kortizol = Biyolojik Ritim + Stres Etkisi (Normalize edilmiş)
-    toplam_kortizol = min(100, baz_kortizol + (stress * 0.5))
+    # Matematiksel Model (Basit ve etkili)
+    kortizol_seviyesi = stress * 1.2 # Stres arttıkça kortizol hızla fırlar
+    yikim_etkisi = max(0, stress - 60) # 60 birimden sonra vücut zarar görmeye başlar
 
-    # GÖRSELLEŞTİRME: METRİK
-    st.metric("Anlık Kortizol Seviyesi", f"{toplam_kortizol:.1f} µg/dL", delta=f"{stress/2:.1f} (Stres Kaynaklı)")
+    # Görsel Kartlar
+    c1, c2 = st.columns(2)
+    c1.metric("Kortizol Miktarı", f"{kortizol_seviyesi:.1f} units")
+    c2.metric("Doku Yıkım Riski", f"%{yikim_etkisi}", delta="-Kritik" if yikim_etkisi > 0 else "Normal", delta_color="inverse")
 
-    # GÖRSELLEŞTİRME: PLOTLY ÇİZGİ GRAFİĞİ (Sirkadiyen Ritim)
-    import plotly.express as px
-    df_ritim = pd.DataFrame({
-        "Saat": list(ritim_puanlari.keys()),
-        "Normal Seviye": list(ritim_puanlari.values()),
-        "Senin Seviyen": [min(100, v + (stress * 0.5)) for v in ritim_puanlari.values()]
-    })
+    # DAHA ETKİLEYİCİ BİR GÖRSEL: Plotly Gauge (Hız Göstergesi)
+    import plotly.graph_objects as go
     
-    fig_kortizol = px.line(df_ritim, x="Saat", y=["Normal Seviye", "Senin Seviyen"], 
-                          title="24 Saatlik Kortizol Döngüsü ve Stres Etkisi",
-                          color_discrete_map={"Normal Seviye": "gray", "Senin Seviyen": "orange"})
-    st.plotly_chart(fig_kortizol, use_container_width=True)
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number",
+        value = kortizol_seviyesi,
+        title = {'text': "Kortizol Tepe Noktası"},
+        gauge = {
+            'axis': {'range': [None, 120]},
+            'bar': {'color': "darkred"},
+            'steps' : [
+                {'range': [0, 40], 'color': "lightgreen"},
+                {'range': [40, 80], 'color': "orange"},
+                {'range': [80, 120], 'color': "red"}],
+            'threshold': {
+                'line': {'color': "black", 'width': 4},
+                'thickness': 0.75,
+                'value': 90}}))
+    
+    st.plotly_chart(fig, use_container_width=True)
 
-    # KLİNİK YORUM
-    if toplam_kortizol > 80:
-        st.error("⚠️ Yüksek Kortizol: Uyku bozukluğu ve bağışıklık zayıflığı riski!")
-    elif toplam_kortizol < 20:
-        st.warning("⚠️ Düşük Kortizol: Yorgunluk ve düşük kan şekeri riski.")
+    # Dinamik ve Sert Uyarılar
+    if stress > 80:
+        st.error("🚨 **KRONİK STRES TESPİT EDİLDİ:** Kas yıkımı ve hafıza sorunları başlayabilir.")
+    elif stress > 50:
+        st.warning("⚠️ **ALARM FAZI:** Vücut sürekli tetikte, dinlenme moduna geçilemiyor.")
     else:
-        st.success("✅ Kortizol seviyesi şu anki saat dilimi için dengeli.")
+        st.success("🍀 **RELAX MOD:** Kortizol seviyesi yenilenme için uygun.")
 # ------------------------------------------------
 # İNSÜLİN SEKME
 # ------------------------------------------------
@@ -248,6 +244,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

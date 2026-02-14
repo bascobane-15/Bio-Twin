@@ -1,28 +1,12 @@
-import pandas as pd
 import streamlit as st
 
-st.subheader("İnsülin – Glukagon Antagonizması (Kan Şekeri Dengesi)")
+st.set_page_config(page_title="BioTwin-Systems", layout="centered")
 
-glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
+st.title("🧠 BioTwin-Systems")
+st.subheader("Sinir ve Endokrin Sistem Dijital İkizi")
+st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
 
-insulin = max(0, glucose - 30)
-glucagon = max(0, 70 - glucose)
-
-df = pd.DataFrame({
-    "Hormon": ["İnsülin", "Glukagon"],
-    "Düzey": [insulin, glucagon]
-})
-
-st.bar_chart(df.set_index("Hormon"))
-
-# Biyolojik yorum
-if insulin > glucagon:
-    st.success("✅ İnsülin baskın → Kan şekeri düşürülüyor")
-elif glucagon > insulin:
-    st.warning("⚠️ Glukagon baskın → Kan şekeri yükseltiliyor")
-else:
-    st.info("ℹ️ Hormonlar dengede → Homeostaz sağlanıyor")
-
+st.divider()
 
 # SEKME YAPISI
 tabs = st.tabs(["🟠 Kortizol", "🔵 İnsülin", "🟣 Tiroksin"])
@@ -70,74 +54,33 @@ with tabs[0]:
 with tabs[1]:
     st.header("İnsülin Hormonu (Kan Şekeri Düzenleyici)")
 
-    st.markdown("""
-    İnsülin ve glukagon hormonları **antagonist** etki göstererek
-    kan şekeri dengesinin (homeostaz) sağlanmasında rol oynar.
-    """)
+    nutrition = st.slider("Beslenme / Glikoz Alımı", 0, 100, 60)
+    insulin = nutrition
 
-    # ÇEVRESEL / FİZYOLOJİK GİRDİ
-    glucose = st.slider("Kan Glikoz Alımı", 0, 100, 60)
+    st.metric("İnsülin Düzeyi", insulin)
 
-    # HORMON DÜZEYLERİ (basitleştirilmiş model)
-    insulin = max(0, glucose - 30)
-    glucagon = max(0, 70 - glucose)
+    if insulin < 30:
+        st.error("❗ İnsülin Eksikliği")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Kan şekerinin yükselmesi (hiperglisemi)  
+        - Hücrelere glikoz girişi azalır  
 
-    # HORMON DÜZEYLERİ GÖSTERİM
-    col1, col2 = st.columns(2)
-    col1.metric("İnsülin Düzeyi", insulin)
-    col2.metric("Glukagon Düzeyi", glucagon)
-
-    # ANTİAGONİST HORMON GRAFİĞİ
-    df = pd.DataFrame({
-        "Hormon": ["İnsülin", "Glukagon"],
-        "Düzey": [insulin, glucagon]
-    })
-
-    st.subheader("Antagonist Hormonlar – Aynı Grafikte")
-    st.bar_chart(df.set_index("Hormon"))
-
-    # FİZYOLOJİK YORUM
-    if insulin > glucagon:
-        st.success("""
-        ✅ **İnsülin Baskın**
-        - Hücrelere glikoz girişi artar  
-        - Kan şekeri düşürülür  
-        - Homeostaz korunur
-        """)
-    elif glucagon > insulin:
-        st.warning("""
-        ⚠️ **Glukagon Baskın**
-        - Karaciğerde glikojen yıkımı artar  
-        - Kana glikoz verilir  
-        - Kan şekeri yükselir
-        """)
-    else:
-        st.info("ℹ️ İnsülin ve glukagon dengede → Kan şekeri dengesi sağlanıyor")
-
-    # HASTALIK SENARYOLARI
-    st.subheader("Hormon Dengesizliğinde Oluşan Durumlar")
-
-    if insulin < 20:
-        st.error("""
-        ❗ **İnsülin Eksikliği**
-        - Hiperglisemi (kan şekeri yüksekliği)
-        - Hücreler glikozu kullanamaz
-
-        **İlişkili Hastalık:**  
+        **İlişkili Hastalık:**
         - Diyabet (Tip 1 benzeri tablo)
         """)
+    elif insulin > 70:
+        st.warning("⚠️ İnsülin Fazlalığı")
+        st.markdown("""
+        **Olası Sonuçlar:**
+        - Kan şekerinin aşırı düşmesi (hipoglisemi)  
+        - Baş dönmesi, bilinç bulanıklığı  
 
-    if insulin > 80:
-        st.warning("""
-        ⚠️ **İnsülin Fazlalığı**
-        - Hipoglisemi (kan şekeri düşüklüğü)
-        - Baş dönmesi, bilinç bulanıklığı
-
-        **İlişkili Durum:**  
+        **İlişkili Durum:**
         - Reaktif hipoglisemi
         """)
-
-
+    else:
+        st.success("✅ İnsülin dengede. Kan şekeri kontrol altında.")
 
 # ------------------------------------------------
 # TİROKSİN SEKME

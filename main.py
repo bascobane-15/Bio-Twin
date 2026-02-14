@@ -1,14 +1,21 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+
+
+st.set_page_config(page_title="BioTwin-Systems", layout="centered")
+
+st.title("🧠 BioTwin-Systems")
+st.subheader("Sinir ve Endokrin Sistem Dijital İkizi")
+st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
+
+st.divider()
 
 tabs = st.tabs([
-    "Kortizol",
-    "İnsülin",
-    "Tiroksin",
-    "Parathormon – Kalsitonin"
+    "🟠 Kortizol",
+    "🔵 İnsülin",
+    "🟣 Tiroksin",
+    "🟢 Parathormon–Kalsitonin"
 ])
-
 
 # ------------------------------------------------
 # KORTİZOL SEKME
@@ -223,6 +230,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

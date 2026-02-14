@@ -145,6 +145,7 @@ svg_code = f"""
 
 st.markdown(svg_code, unsafe_allow_html=True)
 
-st.markdown(avatar_html, unsafe_allow_html=True)
+
    
+
 

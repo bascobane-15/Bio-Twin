@@ -5,25 +5,8 @@ import pandas as pd
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 # SOL PANEL (SIDEBAR) EKLEYELİM
 with st.sidebar:
-    # 1. GERÇEK DİJİTAL İKİZ FİGÜRÜ
-    # Not: Görsel dosyasının kodun olduğu klasörde olduğundan emin ol!
-    try:
-        st.image("insan_figuru.png", use_container_width=True) 
-    except:
-        # Eğer dosya yolu henüz ayarlanmadıysa, profesyonel bir tıbbi model linki:
-        st.image("https://cdn.pixabay.com/photo/2013/07/13/12/12/anatomy-159334_1280.png", use_container_width=True)
-
-    # 2. BAŞLIK TASARIMI
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <p style='color: gray; font-size: 14px; margin-bottom: 5px;'>BioTwin-Home v1.0</p>
-            <h2 style='color: #1E3A8A; margin-top: 0px;'>BioTwin Dashboard</h2>
-            <hr style="border: 0.5px solid #e6e6e6;">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.image("https://cdn-icons-png.flaticon.com/512/2865/2865914.png", width=80)
+    st.title("BioTwin Dashboard")
     st.markdown("---")
     st.info("""
     **Proje Vizyonu:**
@@ -324,6 +307,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

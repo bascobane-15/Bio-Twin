@@ -4,23 +4,22 @@ import pandas as pd
 
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 # SOL PANEL (SIDEBAR) EKLEYELİM
-# Sidebar Yapılandırması
 with st.sidebar:
-    # 1. Profesyonel Tıbbi Figür (Kas ve Organ Yapısı)
-    # Bu URL, anatomik bir insan vücudu görselini temsil eder.
-    # Kendi yerel görselin varsa: st.image("dosya_yolu.png") şeklinde değiştirebilirsin.
-    st.image(
-        "https://img.freepik.com/free-photo/human-body-anatomy-muscle-system_23-2149557432.jpg", 
-        use_container_width=True,
-        caption="BioTwin-Home v1.0"
-    )
-    
-    # 2. BioTwin Dashboard Başlığı
+    # 1. GERÇEK DİJİTAL İKİZ FİGÜRÜ
+    # Not: Görsel dosyasının kodun olduğu klasörde olduğundan emin ol!
+    try:
+        st.image("insan_figuru.png", use_container_width=True) 
+    except:
+        # Eğer dosya yolu henüz ayarlanmadıysa, profesyonel bir tıbbi model linki:
+        st.image("https://cdn.pixabay.com/photo/2013/07/13/12/12/anatomy-159334_1280.png", use_container_width=True)
+
+    # 2. BAŞLIK TASARIMI
     st.markdown(
         """
         <div style="text-align: center;">
-            <h2 style='color: #1E3A8A; margin-top: -10px;'>BioTwin Dashboard</h2>
-            <hr style="border: 1px solid #e6e6e6;">
+            <p style='color: gray; font-size: 14px; margin-bottom: 5px;'>BioTwin-Home v1.0</p>
+            <h2 style='color: #1E3A8A; margin-top: 0px;'>BioTwin Dashboard</h2>
+            <hr style="border: 0.5px solid #e6e6e6;">
         </div>
         """,
         unsafe_allow_html=True
@@ -325,6 +324,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

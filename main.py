@@ -143,36 +143,63 @@ with tabs[1]:
 # TİROKSİN SEKME
 # ------------------------------------------------
 with tabs[2]:
-    st.header("Tiroksin (T4) Hormonu – Metabolizma Düzenleyici")
+    st.header("Tiroksin ve HPT Aksı: Negatif Feedback Mekanizması")
+    
+    # 1. GİRDİ ALANI: Tiroit Bezi Aktivitesi
+    # Öğrenci tiroit bezinin ne kadar çalıştığını seçer
+    tiroit_aktivite = st.slider("Tiroit Bezi Çalışma Hızı (%)", 0, 200, 100)
+    
+    # 2. FEEDBACK MANTIĞI
+    # Tiroksin (T4), tiroit aktivitesine bağlıdır.
+    tiroksin = tiroit_aktivite * 0.5
+    
+    # Negatif Feedback: Tiroksin arttıkça Hipofiz'den salgılanan TSH azalır.
+    tsh = max(0.1, 100 - (tiroksin * 1.5))
 
-    tiroksin = st.slider("Tiroksin (T4) Düzeyi", 0, 100, 50)
-    st.metric("Tiroksin Düzeyi", tiroksin)
+    # 3. GÖRSELLEŞTİRME: Çift Eksenli Grafik veya İki Gösterge
+    col_t1, col_t2 = st.columns(2)
+    with col_t1:
+        st.metric("Tiroksin (T4) Seviyesi", f"{tiroksin:.1f}", delta="Yüksek" if tiroksin > 60 else "Normal")
+    with col_t2:
+        st.metric("TSH (Hipofiz Yanıtı)", f"{tsh:.1f}", delta=f"-{100-tsh:.1f}", delta_color="inverse")
 
-    if tiroksin < 30:
-        st.warning("⚠️ Tiroksin Eksikliği")
+    # Bar Grafik ile Feedback Gösterimi
+    import plotly.graph_objects as go
+    fig_tiroit = go.Figure()
+    fig_tiroit.add_trace(go.Bar(
+        x=['TSH (Uyarıcı)', 'Tiroksin (Sonuç)'],
+        y=[tsh, tiroksin],
+        marker_color=['#9b59b6', '#3498db'], # Mor ve Mavi
+        text=[f"TSH: {tsh:.1f}", f"T4: {tiroksin:.1f}"],
+        textposition='auto'
+    ))
+    fig_tiroit.update_layout(title="Hipofiz - Tiroit Geri Bildirim Dengesi", yaxis_range=[0, 150])
+    st.plotly_chart(fig_tiroit, use_container_width=True)
+
+    st.divider()
+
+    # 4. AKADEMİK BİLGİ ALANI (Ders Materyali)
+    st.subheader("📚 Klinik Bilgi Paneli: HPT Aksı ve Metabolizma")
+    
+    st.info("💡 **Negatif Feedback Nedir?** Kanda Tiroksin yükseldiğinde, bu hormon Hipofiz bezini baskılayarak TSH salgısını azaltır. Böylece vücut kendi dengesini korur.")
+
+    col_t_info1, col_t_info2 = st.columns(2)
+
+    with col_t_info1:
         st.markdown("""
-        **Olası Sonuçlar:**
-        - Metabolizma hızının yavaşlaması  
-        - Kilo artışı  
-        - Yorgunluk, soğuğa hassasiyet  
-
-        **İlişkili Hastalık:**
-        - Hipotiroidi
+        **🔍 Mekanizma Akışı:**
+        1. **Hipotalamus:** TRH salgılar.
+        2. **Hipofiz:** TRH etkisiyle **TSH** salgılar.
+        3. **Tiroit Bezi:** TSH etkisiyle **Tiroksin (T4)** üretir.
+        4. **Geri Bildirim:** T4 düzeyi artınca Hipofiz'e 'TSH'ı kes' sinyali gider.
         """)
-    elif tiroksin > 70:
-        st.error("⚠️ Tiroksin Fazlalığı")
+
+    with col_info2:
         st.markdown("""
-        **Olası Sonuçlar:**
-        - Metabolizma hızının artması  
-        - Kilo kaybı  
-        - Çarpıntı, sinirlilik  
-
-        **İlişkili Hastalık:**
-        - Hipertiroidi
-        """)
-    else:
-        st.success("✅ Tiroksin dengede. Metabolik denge sağlanıyor.")
-
+        **🦋 Klinik Durumlar:**
+        * **Hipertiroidi (Zehirli Guatr):** Çok yüksek T4, çok düşük (baskılanmış) TSH. Metabolizma çok hızlıdır.
+        * **Hipotiroidi:** Düşük T4, çok yüksek TSH (Vücut tiroit bezini zorlar). Metabolizma yavaştır.
+        * **Bel
 # ------------------------------------------------
 # PARATHORMON – KALSİTONİN SEKME
 # ------------------------------------------------
@@ -246,6 +273,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

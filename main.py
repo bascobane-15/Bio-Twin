@@ -5,7 +5,11 @@ import pandas as pd
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 # SOL PANEL (SIDEBAR) EKLEYELİM
 with st.sidebar:
-    st.video("anatomy.mp4")
+    st.markdown("""
+<video width="100%" autoplay loop muted playsinline>
+    <source src="anatomy.mp4" type="video/mp4">
+</video>
+""", unsafe_allow_html=True)
 
     st.title("BioTwin Dashboard")
     st.markdown("---")
@@ -308,6 +312,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

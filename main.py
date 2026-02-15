@@ -4,31 +4,28 @@ import base64
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 st.markdown("""
     <style>
-        /* Ana arka planı koyu gri yap */
+        /* ANA PANEL - Açık koyu gri */
         .stApp {
-            background-color: #2b2f36;  /* Koyu gri */
+            background-color: #343a40;
             color: #ffffff;
         }
         
-        /* Sidebar (Yan Panel) AYNI KALIYOR - dokunmadık */
-        /* Eğer tamamen sabit kalmasını istiyorsan aşağıdaki satırı silebilirsin */
+        /* SOL PANEL - Beyaz */
         [data-testid="stSidebar"] {
-            background-color: #1a1c23;  /* Eski hali */
+            background-color: #ffffff;
         }
         
-        /* Bilgi kutucuklarını (st.info) koyu griye uyarla */
-        .stAlert {
-            background-color: #323843;
-            color: #e2e8f0;
-            border: 1px solid #475569;
+        /* Sidebar içindeki yazılar siyah olsun */
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3,
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] label {
+            color: #000000 !important;
         }
 
-        /* Başlıklar ve metinler */
-        h1, h2, h3, p {
-            color: #f1f5f9 !important;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+        /* Info kutuları ana panele uyumlu */
+        .stAlert {
 
 with st.sidebar:
 
@@ -345,6 +342,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

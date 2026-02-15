@@ -351,3 +351,4 @@ st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
 
 
 
+

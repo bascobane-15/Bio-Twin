@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 # SOL PANEL (SIDEBAR) EKLEYELİM
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/3/3f/Human_body_silhouette.png", width=120)
+    st.image("anatomy.png", width=120)
     st.title("BioTwin Dashboard")
     st.markdown("---")
     st.info("""
@@ -307,6 +307,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

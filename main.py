@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
+import base64
 
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
-# SOL PANEL (SIDEBAR) EKLEYELİM
- with st.sidebar:
-    import base64
+
+with st.sidebar:
 
     with open("anatomy.mp4", "rb") as f:
         video_bytes = f.read()
@@ -18,8 +18,6 @@ st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 
     st.title("BioTwin Dashboard")
 
-
-    st.title("BioTwin Dashboard")
     st.markdown("---")
     st.info("""
     **Proje Vizyonu:**
@@ -320,6 +318,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

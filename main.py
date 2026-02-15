@@ -2,6 +2,33 @@ import streamlit as st
 import pandas as pd
 import base64
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
+st.markdown("""
+    <style>
+        /* Ana arka planı koyu gri yap */
+        .stApp {
+            background-color: #2b2f36;  /* Koyu gri */
+            color: #ffffff;
+        }
+        
+        /* Sidebar (Yan Panel) AYNI KALIYOR - dokunmadık */
+        /* Eğer tamamen sabit kalmasını istiyorsan aşağıdaki satırı silebilirsin */
+        [data-testid="stSidebar"] {
+            background-color: #1a1c23;  /* Eski hali */
+        }
+        
+        /* Bilgi kutucuklarını (st.info) koyu griye uyarla */
+        .stAlert {
+            background-color: #323843;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+
+        /* Başlıklar ve metinler */
+        h1, h2, h3, p {
+            color: #f1f5f9 !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
 with st.sidebar:
 
@@ -318,6 +345,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

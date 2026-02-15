@@ -6,13 +6,13 @@ st.markdown("""
     <style>
         /* Ana arka planı koyulaştır */
         .stApp {
-            background-color: #0e1117;
+            background-color: #1a1c23;
             color: #ffffff;
         }
         
         /* Sidebar (Yan Panel) ayarları */
         [data-testid="stSidebar"] {
-            background-color: #161b22;
+            background-color: #d1d5db;
         }
         
         /* Bilgi kutucuklarını (st.info) karanlık moda uyarla */
@@ -343,6 +343,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

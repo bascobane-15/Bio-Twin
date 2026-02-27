@@ -26,7 +26,7 @@ st.markdown("""
 
         /* Info kutuları ana panele uyumlu */
         .stAlert {
-            background-color: #3e444c;
+            background-color: #343a40;
             color: #ffffff;
             border: 1px solid #495057;
         }
@@ -353,6 +353,7 @@ with tabs[3]:
 
 st.divider()
 st.caption("BioTwin-Systems | Eğitim Amaçlı Dijital İkiz Modeli")
+
 
 
 

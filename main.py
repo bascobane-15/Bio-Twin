@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import base64
-import google.generativeai as genai
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 st.markdown("""
     <style>
@@ -53,7 +52,7 @@ with st.sidebar:
 
 
     st.title("BioTwin Dashboard")
-    Sayfa = st.sidebar.radio("Gitmek istediğiniz sayfayı seçin:", ["📊 Dashboard", "💬 Hormonlarla Konuş (NPC)"])
+    
     st.markdown("---")
     st.info("""
     **Proje Vizyonu:**
@@ -77,12 +76,12 @@ st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkil
     
 st.divider()
     
-    tabs = st.tabs([
-        "🟠 Kortizol",
-        "🔵 İnsülin",
-        "🟣 Tiroksin",
-        "🟢 Parathormon–Kalsitonin"
-    ])
+tabs = st.tabs([
+    "🟠 Kortizol",
+    "🔵 İnsülin",
+    "🟣 Tiroksin",
+    "🟢 Parathormon–Kalsitonin"
+])
 
 # ------------------------------------------------
 # KORTİZOL SEKME

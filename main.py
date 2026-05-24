@@ -53,7 +53,7 @@ with st.sidebar:
 
 
     st.title("BioTwin Dashboard")
-
+    Sayfa = st.sidebar.radio("Gitmek istediğiniz sayfayı seçin:", ["📊 Dashboard", "💬 Hormonlarla Konuş (NPC)"])
     st.markdown("---")
     st.info("""
     **Proje Vizyonu:**

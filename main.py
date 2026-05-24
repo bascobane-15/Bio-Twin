@@ -69,19 +69,21 @@ with st.sidebar:
     
     st.subheader("Simülasyon Durumu")
     st.success("🟢 Sistem Aktif")
-   
-st.title("🧠 BioTwin-Systems")
-st.subheader("Endokrin Sistem Dijital İkizi")
-st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
-
-st.divider()
-
-tabs = st.tabs([
-    "🟠 Kortizol",
-    "🔵 İnsülin",
-    "🟣 Tiroksin",
-    "🟢 Parathormon–Kalsitonin"
-])
+  # --- 1. SAYFA: DASHBOARD (Mevcut Kodların) ---
+if sayfa == "📊 Dashboard":
+    st.title("BioTwin-Systems Dashboard") 
+    st.title("🧠 BioTwin-Systems")
+    st.subheader("Endokrin Sistem Dijital İkizi")
+    st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
+    
+    st.divider()
+    
+    tabs = st.tabs([
+        "🟠 Kortizol",
+        "🔵 İnsülin",
+        "🟣 Tiroksin",
+        "🟢 Parathormon–Kalsitonin"
+    ])
 
 # ------------------------------------------------
 # KORTİZOL SEKME

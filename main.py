@@ -1,6 +1,62 @@
 import streamlit as st
 import pandas as pd
 import base64
+import google.generativeai as genai
+
+# --- SOL MENÜ (NAVİGASYON) ---
+st.sidebar.title("BioTwin Menü")
+sayfa = st.sidebar.radio("Gitmek istediğiniz sayfayı seçin:", ["📊 Dashboard", "💬 Hormonlarla Konuş (NPC)"])
+
+# --- 1. SAYFA: DASHBOARD (Mevcut Kodların) ---
+if sayfa == "📊 Dashboard":
+    st.title("BioTwin-Systems Dashboard")
+    # BURAYA ŞU ANKİ MEVCUT TÜM KODLARINI YAPIŞTIR (Sliderlar, grafikler vs.)
+    # (Hali hazırda main.py içinde ne varsa bu if'in altına gelecek şekilde içeri kaydırılmalı)
+
+# --- 2. SAYFA: CHATBOT (Yeni Ekleyeceğin Bölüm) ---
+elif sayfa == "💬 Hormonlarla Konuş (NPC)":
+    # Buraya sana daha önce verdiğim Chatbot kodlarını yapıştıracağız.
+    # İşte o kodların bu sayfaya uyarlanmış hali:
+
+    st.title("🧬 Organlarla Konuş: Endokrin Chatbot")
+    
+    # API Anahtarını Ayarlardan çekiyoruz (Güvenlik için)
+    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+
+    # Organ bilgilerini tanımla
+    organlar = {
+        "Pankreas": "Sen Pankreassın. Kan şekerini dengelemek senin işin...",
+        "Tiroit Bezi": "Sen Tiroit Bezisin. Metabolizmanın hızından sorumlusun...",
+        "Böbrek Üstü Bezi": "Sen stres ve hayatta kalma uzmanısın..."
+    }
+
+    secilen_organ = st.selectbox("Hangi organla konuşmak istersin?", list(organlar.keys()))
+
+    # Chat Hafızası
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    # Mesajları Ekrana Bas
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    # Kullanıcı Yazınca
+    if prompt := st.chat_input("Sorunu sor..."):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        # Yapay Zeka Cevabı
+        model = genai.GenerativeModel("gemini-1.5-flash", system_instruction=organlar[secilen_organ])
+        response = model.generate_content(prompt)
+        
+        with st.chat_message("assistant"):
+            st.markdown(response.text)
+        st.session_state.messages.append({"role": "assistant", "content": response.text})
+# Anahtarı gizli ayarlardan çekiyoruz:
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 st.markdown("""
     <style>

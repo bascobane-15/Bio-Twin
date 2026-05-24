@@ -69,8 +69,7 @@ with st.sidebar:
     
     st.subheader("Simülasyon Durumu")
     st.success("🟢 Sistem Aktif")
-  # --- 1. SAYFA: DASHBOARD (Mevcut Kodların) ---
-if sayfa == "📊 Dashboard":
+ 
     st.title("BioTwin-Systems Dashboard") 
     st.title("🧠 BioTwin-Systems")
     st.subheader("Endokrin Sistem Dijital İkizi")

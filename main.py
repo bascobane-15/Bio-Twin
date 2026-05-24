@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import base64
 import google.generativeai as genai
-
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
 st.markdown("""
     <style>

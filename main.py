@@ -77,16 +77,31 @@ st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkil
 st.divider()
  
 tabs = st.tabs([
+    "🟢 Hormonlar",
     "🟠 Kortizol",
     "🔵 İnsülin",
     "🟣 Tiroksin",
     "🟢 Parathormon–Kalsitonin"
 ])
-
 # ------------------------------------------------
 # KORTİZOL SEKME
 # ------------------------------------------------
 with tabs[0]:
+    st.subheader("Hormonlar")
+
+    st.write("""
+    Endokrin Sistem: Hormonlar Nasıl Çalışır?
+    """)
+    col1, col2, col3 = st.columns([1,2,1])
+
+    with col2:
+    st.video("https://youtu.be/Tn3c6wgNjB8?si=jXb7csid2WfaH0gT")
+
+    st.divider()
+# ------------------------------------------------
+# KORTİZOL SEKME
+# ------------------------------------------------
+with tabs[1]:
     st.header("Kortizol: Stres ve Sistemik Etkiler")
     
     # 1. GİRDİ ALANI
@@ -147,7 +162,7 @@ with tabs[0]:
 # ------------------------------------------------
 # İNSÜLİN SEKME
 # ------------------------------------------------
-with tabs[1]:
+with tabs[2]:
     st.header("İnsülin ve Glukagon: Kan Şekeri Homeostazı")
     
     # 1. GİRDİ ALANI: Kan Glikoz Düzeyi
@@ -208,7 +223,7 @@ with tabs[1]:
 # ------------------------------------------------
 # TİROKSİN SEKME
 # ------------------------------------------------
-with tabs[2]:
+with tabs[3]:
     st.header("Tiroksin ve HPT Aksı: Negatif Feedback Mekanizması")
     
     # 1. GİRDİ ALANI: Tiroit Bezi Aktivitesi
@@ -277,22 +292,12 @@ with tabs[2]:
     st.info("""
     **HPT Aksı Akış Şeması:** Hipotalamus (TRH) ➡️ Ön Hipofiz (TSH) ➡️ Tiroit Bezi (T4) ➡️ Hedef Dokular.
     """)
-    st.subheader("Hormonlar")
-
-    st.write("""
-    Endokrin Sistem: Hormonlar Nasıl Çalışır?
-    """)
-    col1, col2, col3 = st.columns([1,2,1])
-
-    with col2:
-            st.video("https://youtu.be/Tn3c6wgNjB8?si=jXb7csid2WfaH0gT")
-
-    st.divider()
+    
 # ------------------------------------------------
 # PARATHORMON – KALSİTONİN SEKME
 # ------------------------------------------------
 
-with tabs[3]:
+with tabs[4]:
     st.header("Parathormon – Kalsitonin (Kalsiyum Dengesi)")
 
     st.markdown("""

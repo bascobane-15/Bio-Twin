@@ -277,6 +277,17 @@ with tabs[2]:
     st.info("""
     **HPT Aksı Akış Şeması:** Hipotalamus (TRH) ➡️ Ön Hipofiz (TSH) ➡️ Tiroit Bezi (T4) ➡️ Hedef Dokular.
     """)
+    st.subheader("Hormonlar")
+
+    st.write("""
+    Endokrin Sistem: Hormonlar Nasıl Çalışır?
+    """)
+    col1, col2, col3 = st.columns([1,2,1])
+
+    with col2:
+            st.video("https://youtu.be/Tn3c6wgNjB8?si=jXb7csid2WfaH0gT")
+
+    st.divider()
 # ------------------------------------------------
 # PARATHORMON – KALSİTONİN SEKME
 # ------------------------------------------------

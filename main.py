@@ -90,7 +90,7 @@ with tabs[0]:
     st.subheader("Hormonlar")
 
     st.write("""
-    Endokrin Sistem: Hormonlar Nasıl Çalışır?
+    Hormonlar, vücudunuzdaki çeşitli organ ve dokuların işlevlerini koordine eden kimyasal habercilerdir. İç salgı bezleri tarafından üretilerek doğrudan kana salınırlar 
     """)
     col1, col2, col3 = st.columns([1,2,1])
 
@@ -98,10 +98,10 @@ with tabs[0]:
         st.video("https://youtu.be/Tn3c6wgNjB8?si=jXb7csid2WfaH0gT")
 
     st.divider()
-    st.subheader("Endokrin Sistem: Bezler ve Hormonlar")
+    st.subheader("Endokrin Bezler ve Hormonları")
 
     st.write("""
-    Hormonlar, vücudunuzdaki çeşitli organ ve dokuların işlevlerini koordine eden kimyasal habercilerdir. İç salgı bezleri tarafından üretilerek doğrudan kana salınırlar 
+    HormonlarNasıl Çalışır?  
     """)
     col1, col2, col3 = st.columns([1,2,1])
 

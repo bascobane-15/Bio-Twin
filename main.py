@@ -75,7 +75,17 @@ st.subheader("Endokrin Sistem Dijital İkizi")
 st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
     
 st.divider()
-    
+st.subheader("Hormonlar")
+
+st.write("""
+Endokrin Sistem: Hormonlar Nasıl Çalışır?
+""")
+col1, col2, col3 = st.columns([1,2,1])
+
+with col2:
+st.video("https://youtu.be/Tn3c6wgNjB8?si=jXb7csid2WfaH0gT")
+
+st.divider()  
 tabs = st.tabs([
     "🟠 Kortizol",
     "🔵 İnsülin",
@@ -245,17 +255,7 @@ with tabs[2]:
     st.plotly_chart(fig_tiroit, use_container_width=True)
 
     st.divider()
-    st.subheader("Hormonlar")
-
-    st.write("""
-    Endokrin Sistem: Hormonlar Nasıl Çalışır?
-    """)
-    col1, col2, col3 = st.columns([1,2,1])
-
-    with col2:
-            st.video("https://youtu.be/Tn3c6wgNjB8?si=jXb7csid2WfaH0gT")
-
-    st.divider()
+    
     # 5. AKADEMİK BİLGİ ALANI (Ders Materyali)
     st.subheader("📚 Klinik Bilgi Paneli: Tiroit Fizyopatolojisi")
     

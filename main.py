@@ -106,7 +106,7 @@ with tabs[0]:
     col1, col2, col3 = st.columns([1,2,1])
 
     with col2:
-        st.video("https://youtu.be/4RAEucjAfDc?si=qHpNccvnUl6EiJtr")
+        st.video("https://youtu.be/Tn3c6wgNjB8?si=yjAfgxX5_lSm-ynT")
 
     st.divider()
 # ------------------------------------------------

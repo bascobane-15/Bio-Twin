@@ -10,45 +10,59 @@ st.markdown("""
             color: #ffffff;
         }
         
-        /* SOL PANEL - Beyaz */
-        [data-testid="stSidebar"] {
-            background-color: #ffffff;
-        }
-        
-        /* Sidebar içindeki yazılar beyaz olsun */
-        [data-testid="stSidebar"] h1,
-        [data-testid="stSidebar"] h2,
-        [data-testid="stSidebar"] h3,
-        [data-testid="stSidebar"] p,
-        [data-testid="stSidebar"] label {
-            color: #000000 !important;
-        }
-
-        /* Info kutuları ana panele uyumlu */
-        .stAlert {
-            background-color: #343a40;
-            color: #ffffff;
-            border: 1px solid #495057;
-        }
-
-        /* Başlık ve metinler (ana panel) */
-        h1, h2, h3, p {
-            color: #f8f9fa !important;
-        }
+        st.markdown("""
+    <style>
+    
+    /* SOL PANEL */
+    [data-testid="stSidebar"]{
+        background-color: #ffffff;
+    }
+    
+    /* Sidebar başlık ve normal yazılar */
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] li{
+        color:#000000 !important;
+    }
+    
+    /* Sidebar içindeki INFO kutusu */
+    [data-testid="stSidebar"] .stAlert{
+        background-color:#343a40 !important;
+        border:1px solid #495057 !important;
+        border-radius:10px;
+    }
+    
+    /* INFO kutusundaki TÜM yazılar */
+    [data-testid="stSidebar"] .stAlert,
+    [data-testid="stSidebar"] .stAlert p,
+    [data-testid="stSidebar"] .stAlert div,
+    [data-testid="stSidebar"] .stAlert span,
+    [data-testid="stSidebar"] .stAlert strong,
+    [data-testid="stSidebar"] .stAlert li{
+        color:#f8f9fa !important;
+    }
+    
+    /* Ana panel başlıkları */
+    h1,h2,h3,p{
+        color:#f8f9fa !important;
+    }
+    
     </style>
     """, unsafe_allow_html=True)
-
-with st.sidebar:
-
-    with open("anatomy.mp4", "rb") as f:
-        video_bytes = f.read()
-        video_base64 = base64.b64encode(video_bytes).decode()
-
-    st.markdown(f"""
-<video width="100%" autoplay loop muted playsinline>
-    <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
-</video>
-""", unsafe_allow_html=True)
+    with st.sidebar:
+    
+        with open("anatomy.mp4", "rb") as f:
+            video_bytes = f.read()
+            video_base64 = base64.b64encode(video_bytes).decode()
+    
+        st.markdown(f"""
+    <video width="100%" autoplay loop muted playsinline>
+        <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
+    </video>
+    """, unsafe_allow_html=True)
 
 
     st.title("BioTwin Dashboard")

@@ -11,14 +11,14 @@ st.markdown("""
         }
         
         st.markdown("""
-    <style>
+   <style>
     
     /* SOL PANEL */
     [data-testid="stSidebar"]{
-        background-color: #ffffff;
+        background-color:#ffffff;
     }
     
-    /* Sidebar başlık ve normal yazılar */
+    /* Sidebar yazıları */
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3,
@@ -28,13 +28,20 @@ st.markdown("""
         color:#000000 !important;
     }
     
-    /* Sidebar içindeki INFO kutusu */
+    /* Info kutusu */
     [data-testid="stSidebar"] .stAlert{
         background-color:#343a40 !important;
         border:1px solid #495057 !important;
         border-radius:10px;
     }
     
+    /* Info kutusundaki yazılar */
+    [data-testid="stSidebar"] .stAlert *{
+        color:#f8f9fa !important;
+    }
+    
+    </style>
+    """, unsafe_allow_html=True)
     /* INFO kutusundaki TÜM yazılar */
     [data-testid="stSidebar"] .stAlert,
     [data-testid="stSidebar"] .stAlert p,

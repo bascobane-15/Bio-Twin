@@ -90,7 +90,7 @@ with tabs[0]:
     st.subheader("Hormonlar")
 
     st.write("""
-    Hormonlar, vücudunuzdaki çeşitli organ ve dokuların işlevlerini koordine eden kimyasal habercilerdir. İç salgı bezleri tarafından üretilerek doğrudan kana salınırlar 
+    Hormonlar, vücudunuzdaki çeşitli organ ve dokuların işlevlerini koordine eden kimyasal habercilerdir. İç salgı bezleri tarafından üretilerek doğrudan kana salınırlar. 
     """)
     col1, col2, col3 = st.columns([1,2,1])
 
@@ -101,7 +101,7 @@ with tabs[0]:
     st.subheader("Endokrin Bezler ve Hormonları")
 
     st.write("""
-    HormonlarNasıl Çalışır?  
+    Hormonlar Nasıl Çalışır?  
     """)
     col1, col2, col3 = st.columns([1,2,1])
 

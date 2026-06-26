@@ -10,10 +10,7 @@ st.markdown("""
             color: #ffffff;
         }
         
-        st.markdown("""
-   <style>
-    
-    /* SOL PANEL - Beyaz */
+        /* SOL PANEL - Beyaz */
         [data-testid="stSidebar"] {
             background-color: #ffffff;
         }
@@ -41,25 +38,17 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-    
-    /* Ana panel başlıkları */
-    h1,h2,h3,p{
-        color:#f8f9fa !important;
-    }
-    
-    </style>
-    """, unsafe_allow_html=True)
-    with st.sidebar:
-    
-        with open("anatomy.mp4", "rb") as f:
-            video_bytes = f.read()
-            video_base64 = base64.b64encode(video_bytes).decode()
-    
-        st.markdown(f"""
-    <video width="100%" autoplay loop muted playsinline>
-        <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
-    </video>
-    """, unsafe_allow_html=True)
+with st.sidebar:
+
+    with open("anatomy.mp4", "rb") as f:
+        video_bytes = f.read()
+        video_base64 = base64.b64encode(video_bytes).decode()
+
+    st.markdown(f"""
+<video width="100%" autoplay loop muted playsinline>
+    <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
+</video>
+""", unsafe_allow_html=True)
 
 
     st.title("BioTwin Dashboard")

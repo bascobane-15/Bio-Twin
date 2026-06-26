@@ -1,56 +1,58 @@
 import streamlit as st
 import pandas as pd
 import base64
+
 st.set_page_config(page_title="BioTwin-Systems", layout="wide")
+
 st.markdown("""
-    <style>
-        /* ANA PANEL - Açık koyu gri */
-        .stApp {
-            background-color: #343a40;
-            color: #ffffff;
-        }
-        
-        st.markdown("""
-   <style>
-    
-    /* SOL PANEL */
-    [data-testid="stSidebar"]{
-        background-color:#ffffff;
-    }
-    
-    /* Sidebar yazıları */
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3,
-    [data-testid="stSidebar"] p,
-    [data-testid="stSidebar"] label,
-    [data-testid="stSidebar"] li{
-        color:#000000 !important;
-    }
-    
-    /* Info kutusu */
-    [data-testid="stSidebar"] .stAlert{
-        background-color:#343a40 !important;
-        border:1px solid #495057 !important;
-        border-radius:10px;
-    }
-    
-    /* Info kutusundaki yazılar */
-    [data-testid="stSidebar"] .stAlert *{
-        color:#f8f9fa !important;
-    }
-    
-    </style>
-    """, unsafe_allow_html=True)
-    /* INFO kutusundaki TÜM yazılar */
-    [data-testid="stSidebar"] .stAlert,
-    [data-testid="stSidebar"] .stAlert p,
-    [data-testid="stSidebar"] .stAlert div,
-    [data-testid="stSidebar"] .stAlert span,
-    [data-testid="stSidebar"] .stAlert strong,
-    [data-testid="stSidebar"] .stAlert li{
-        color:#f8f9fa !important;
-    }
+<style>
+
+/* ANA PANEL */
+.stApp{
+    background-color:#343a40;
+    color:#ffffff;
+}
+
+/* SOL PANEL */
+[data-testid="stSidebar"]{
+    background-color:#ffffff;
+}
+
+/* Sidebar yazıları */
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] li{
+    color:#000000 !important;
+}
+
+/* Sidebar Info Kutusu */
+[data-testid="stSidebar"] .stAlert{
+    background-color:#343a40 !important;
+    border:1px solid #495057 !important;
+    border-radius:10px;
+}
+
+/* Info kutusundaki tüm yazılar */
+[data-testid="stSidebar"] .stAlert,
+[data-testid="stSidebar"] .stAlert *,
+[data-testid="stSidebar"] .stAlert p,
+[data-testid="stSidebar"] .stAlert div,
+[data-testid="stSidebar"] .stAlert span,
+[data-testid="stSidebar"] .stAlert strong,
+[data-testid="stSidebar"] .stAlert li{
+    color:#f8f9fa !important;
+}
+
+/* Ana panel başlıkları */
+h1,h2,h3{
+    color:#f8f9fa;
+}
+
+</style>
+""", unsafe_allow_html=True)
     
     /* Ana panel başlıkları */
     h1,h2,h3,p{

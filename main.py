@@ -76,8 +76,8 @@ with st.sidebar:
  
 st.title("BioTwin-Systems") 
 st.title("🧠 Endokrin Sistem Dijital İkizi")
-st.subheader("Hormon sentezi, geri bildirim mekanizmaları ve organlar arası biyokimyasal etkileşimleri dinamik simülasyonlarla modelleyen yenilikçi biyo-bilişim platformu")
-st.markdown("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
+st.subheader("Hormon sentezi, geri bildirim mekanizmaları ile hormon azlığı veya fazlalığının yol açtığı klinik tabloları modelleyen dinamik simülasyon platformu.")
+st.subheader("Her hormon için ayrı senaryo üzerinden **neden–sonuç ilişkileri** gözlemlenir.")
     
 st.divider()
  

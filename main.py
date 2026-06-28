@@ -51,7 +51,7 @@ with st.sidebar:
 """, unsafe_allow_html=True)
 
 
-    st.title("BioTwin Dashboard")
+    st.title("BioTwin Systems")
     
     st.markdown("---")
     st.info("""

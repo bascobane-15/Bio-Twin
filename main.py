@@ -40,6 +40,11 @@ st.markdown("""
         h1, h2, h3, p {
             color: #f8f9fa !important;
         }
+        /* Sekme (Tabs) yazı boyutunu büyütme */
+        button[data-baseweb="tab"] p {
+              font-size: 1.25rem !important; /* Yazı boyutunu büyütür */
+              font-weight: 600 !important;   /* Yazıları biraz daha belirgin (kalın) yapar */
+        }
     </style>
     """, unsafe_allow_html=True)
 

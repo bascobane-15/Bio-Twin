@@ -42,7 +42,7 @@ st.markdown("""
         }
         /* Sekme (Tabs) yazı boyutunu büyütme */
         button[data-baseweb="tab"] p {
-              font-size: 1.25rem !important; /* Yazı boyutunu büyütür */
+              font-size: 1.4rem !important; /* Yazı boyutunu büyütür */
               font-weight: 600 !important;   /* Yazıları biraz daha belirgin (kalın) yapar */
         }
     </style>

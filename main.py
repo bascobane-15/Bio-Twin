@@ -15,12 +15,17 @@ st.markdown("""
             background-color: #ffffff;
         }
         
-        /* Sidebar içindeki yazılar beyaz olsun */
-        [data-testid="stSidebar"] h1,
-        [data-testid="stSidebar"] h2,
-        [data-testid="stSidebar"] h3,
-        [data-testid="stSidebar"] p,
+        /* Sidebar genelindeki başlıklar siyah kalsın */
+        [data-testid="stSidebar"] h1, 
+        [data-testid="stSidebar"] h2, 
+        [data-testid="stSidebar"] h3, 
         [data-testid="stSidebar"] label {
+            color: #000000 !important;
+        }
+    
+        /* Sadece koyu renkli kutunun içindeki paragraflar ve listeler beyaz olsun */
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] li {
             color: #ffffff !important;
         }
 

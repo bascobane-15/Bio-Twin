@@ -15,13 +15,13 @@ st.markdown("""
             background-color: #ffffff;
         }
         
-        /* Sidebar içindeki yazılar siyah olsun */
+        /* Sidebar içindeki yazılar beyaz olsun */
         [data-testid="stSidebar"] h1,
         [data-testid="stSidebar"] h2,
         [data-testid="stSidebar"] h3,
         [data-testid="stSidebar"] p,
         [data-testid="stSidebar"] label {
-            color: #000000 !important;
+            color: #ffffff !important;
         }
 
         /* Info kutuları ana panele uyumlu */
